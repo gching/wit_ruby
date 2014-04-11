@@ -12,6 +12,64 @@ module Wit
 
 
 
+      ## HTTP Header for API calls to Wit
+      HTTP_HEADERS = {
+          'Authorization' => 'Bearer #{@auth_token}'
+      }
+      DEFAULTS = {
+          :host => 'api.wit.ai',
+          :port => nil,
+          :use_ssl => true,
+          :ssl_verify_peer => true,
+          :ssl_ca_file => File.dirname(__FILE__) + '/../../../conf/cacert.pem',
+          :timeout => 30,
+          :proxy_addr => nil,
+          :proxy_port => nil,
+          :proxy_user => nil,
+          :proxy_pass => nil,
+          :retry_limit => 1,
+      }
+
+
+      ## Initialize the new instance with the given auth_token.
+      def initialize(auth_token, options = {})
+        @auth_token = auth_token.strip
+        @params = DEFAULTS.merge! options
+        setup_conn
+
+      end
+
+#################################
+      private
+
+      ## Used to setup a connection using Net::HTTP object when making requests
+      ## to the API.
+      def setup_conn
+
+        ## Setup connection through the @conn instance variable and proxy if
+        ## if given.
+        @conn = conn_proxy.new(@params[:host], @params[:port],
+          @params[:proxy_addr], @params[:proxy_port],
+          @params[:proxy_user], @params[:proxy_pass]
+          )
+        setup_ssl
+
+        ## Set timeouts
+        @conn.open_timeout = @params[:timeout]
+        @conn.read_timeout = @params[:timeout]
+      end
+
+      ## Setup SSL for the given connection in @conn.
+      def setup_ssl
+        @conn.use_ssl = @params[:use_ssl]
+        if @params[:ssl_verify_peer]
+          @conn.verify_mode = OpenSSL::SSL::VERIFY_PEER
+          @conn.ca_file = @params[:ssl_ca_file]
+        else
+          @conn.verify_mode = OpenSSL::SSL::VERIFY_NONE
+        end
+      end
+
 
 
 
