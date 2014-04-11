@@ -5,7 +5,7 @@ require 'wit_ruby/version'
 
 Gem::Specification.new do |spec|
   spec.name          = "wit_ruby"
-  spec.version       = WitRuby::VERSION
+  spec.version       = Wit::VERSION
   spec.authors       = ["Gavin Ching"]
   spec.email         = ["gavinchingy@gmail.com"]
   spec.description   = %q{Provides a Ruby interface with the Wit.ai API.}

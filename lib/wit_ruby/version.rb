@@ -1,3 +1,3 @@
-module WitRuby
+module Wit
   VERSION = "0.0.1"
 end

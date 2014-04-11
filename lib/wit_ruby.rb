@@ -1,5 +1,4 @@
 require "wit_ruby/version"
 
-module WitRuby
-  # Your code goes here...
-end
+
+require "wit_ruby/session/client"

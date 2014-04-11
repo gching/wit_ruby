@@ -1,7 +1,7 @@
 require 'spec_helper'
 
 
-describe WitRuby do
+describe Wit do
   let (:message) {"Hi there!"}
 
   it '.send_message(message)' do
