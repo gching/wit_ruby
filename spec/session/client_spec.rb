@@ -9,8 +9,8 @@ describe Wit::Session::Client do
     pending("Set up instance and call the auth_token return method")
   end
 
-  it "should set up a default ssl connection" do
-    pending("Set up connection with random auth token")
+  it "should allow the change of the current instance's auth token" do
+    pending("Change the instance auth token to another")
   end
-
+  
 end
