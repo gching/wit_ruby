@@ -1,3 +1,5 @@
+[![Build Status](https://travis-ci.org/gching/wit_ruby.svg?branch=master)](https://travis-ci.org/gching/wit_ruby)[travis]
+
 # WitRuby
 
 Provides a Ruby interface with the Wit.ai API.

@@ -17,8 +17,8 @@ module Wit
           'Authorization' => 'Bearer #{@auth_token}'
       }
       DEFAULTS = {
-          :host => 'api.wit.ai',
-          :port => nil,
+          :addr => 'api.wit.ai',
+          :port => 443,
           :use_ssl => true,
           :ssl_verify_peer => true,
           :ssl_ca_file => File.dirname(__FILE__) + '/../../../conf/cacert.pem',
@@ -39,6 +39,12 @@ module Wit
 
       end
 
+
+      ## Change the given auth token.
+      def change_auth(new_auth)
+        @auth_token = new_auth.strip
+      end
+
 #################################
       private
 
@@ -48,7 +54,7 @@ module Wit
 
         ## Setup connection through the @conn instance variable and proxy if
         ## if given.
-        @conn = conn_proxy.new(@params[:host], @params[:port],
+        @conn = Net::HTTP.new(@params[:addr], @params[:port],
           @params[:proxy_addr], @params[:proxy_port],
           @params[:proxy_user], @params[:proxy_pass]
           )
