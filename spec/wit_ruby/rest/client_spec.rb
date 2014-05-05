@@ -1,6 +1,9 @@
+## client_spec.rb
+## Test the functionalities of lib/wit_ruby/rest/client.rb
+
 require 'spec_helper'
 
-describe Wit::Session::Client do
+describe Wit::REST::Client do
   before do
     @rand_auth = "someAuth"
     @another_auth = "someOtherAuth"
@@ -14,12 +17,12 @@ describe Wit::Session::Client do
 
   it "should create a new client instance given some auth token" do
     #pending("Need to instantiate the given client with a given token.")
-    @client = Wit::Session::Client.new (@rand_auth)
+    @client = Wit::REST::Client.new (@rand_auth)
     expect(@client.instance_variable_get("@auth_token")).to  eql(@rand_auth)
   end
 
   it "should have the proper default connection parameters" do
-    @client = Wit::Session::Client.new(@rand_auth)
+    @client = Wit::REST::Client.new(@rand_auth)
     @conn = @client.instance_variable_get("@conn")
     expect(@conn.address).to  eql("api.wit.ai")
     expect(@conn.port).to eql(443)
@@ -29,13 +32,13 @@ describe Wit::Session::Client do
 
   it "should allow the change of the current instance's auth token" do
     #pending("Change the instance auth token to another")
-    @client = Wit::Session::Client.new(@rand_auth)
+    @client = Wit::REST::Client.new(@rand_auth)
     @client.change_auth(@another_auth)
     expect(@client.instance_variable_get("@auth_token")).to eql(@another_auth)
   end
 
   it "should allow for change of the default options and accept proxy" do
-    @client = Wit::Session::Client.new(@rand_auth, addr: @new_host,
+    @client = Wit::REST::Client.new(@rand_auth, addr: @new_host,
       port: @new_port, ssl_ca_file: @new_ssl_path, timeout: @new_timeout,
       proxy_addr: @new_proxy, proxy_port: @new_proxy_port)
     @conn = @client.instance_variable_get("@conn")
@@ -48,5 +51,10 @@ describe Wit::Session::Client do
     expect(@conn.read_timeout).to eql(@new_timeout)
     expect(@conn.ca_file).to eql(@new_ssl_path)
 
+  end
+
+  it "should setup a session parameter to properly wrap API with commands" do
+    @client = Wit::REST::Client.new (@rand_auth)
+    expect(@client.instance_variable_get("@session")).to be_true
   end
 end

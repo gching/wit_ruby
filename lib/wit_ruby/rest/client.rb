@@ -1,5 +1,5 @@
 module Wit
-  module Session
+  module REST
     ## Wit::Session::Client class holds the authentication parameters and
     ## handles making the HTTP requests to the Wit API. These methods should be
     ## internally called and never called directly from the user.
@@ -9,7 +9,6 @@ module Wit
     ## => @client = Wit::Session:Client.new auth_token
     ##
     class Client
-
 
 
       ## HTTP Header for API calls to Wit
@@ -30,19 +29,39 @@ module Wit
           :retry_limit => 1,
       }
 
+      attr_reader :last_req, :last_response, :session
 
       ## Initialize the new instance with the given auth_token.
       def initialize(auth_token, options = {})
         @auth_token = auth_token.strip
         @params = DEFAULTS.merge! options
         setup_conn
-
+        setup_session
       end
 
 
       ## Change the given auth token.
       def change_auth(new_auth)
         @auth_token = new_auth.strip
+      end
+
+      ## Defines each REST method for the given client. GET, PUT, POST and DELETE
+      [:get, :put, :post, :delete].each do |rest_method|
+        ## Get the given class for Net::HTTP depending on the current method.
+        method_rest_class = Net::HTTP.const_get rest_method.to_s.capitalize
+
+        ## Define the actual method for Wit::Session:Client
+        define_method rest_method do |path, *args|
+        #  params = twilify args[0]; params = {} if params.empty?
+        #  unless args[1] # build the full path unless already given
+        #    path = "#{path}.json"
+        #    path << "?#{url_encode(params)}" if rest_method == :get && !params.empty?
+        #  end
+          request = method_rest_class.new path, HTTP_HEADERS
+        # request.basic_auth @account_sid, @auth_token
+          request.form_data = params if [:post, :put].include?(rest_method)
+          connect_send request
+        end
       end
 
 #################################
@@ -76,10 +95,14 @@ module Wit
         end
       end
 
+      def connect_send(request)
+        @last_req = request
+        left_retries = @config[:retry_limit]
+      end
 
-
-
+      def setup_session
+        @session = Wit::REST::Session.new
+      end
     end
-
   end
 end

@@ -3,4 +3,5 @@ require 'net/https'
 
 
 require "wit_ruby/version"
-require "wit_ruby/session/client"
+require "wit_ruby/rest/client"
+require "wit_ruby/rest/session"

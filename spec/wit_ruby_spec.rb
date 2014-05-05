@@ -4,11 +4,14 @@ require 'spec_helper'
 describe Wit do
   let (:message) {"Hi there!"}
 
+
   it '.send_message(message)' do
-  	pending
+    pending
+  	#results = Wit.send_message(message)
+  #  expect(results).to be_a Wit::Results
   end
 
-  it ".send_sound(soundwave)" do
+  it ".send_sound_message(soundwave)" do
     pending
   end
 
