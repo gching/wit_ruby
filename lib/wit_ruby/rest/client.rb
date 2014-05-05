@@ -101,7 +101,7 @@ module Wit
       end
 
       def setup_session
-        @session = Wit::REST::Session.new
+        @session = Wit::REST::Session.new(@auth_token)
       end
     end
   end
