@@ -30,12 +30,12 @@ describe Wit::REST::Session do
     end
 
     ## Intent_id could be intent id or the name of the intent.
-    it ".get_intent(intent_id)" do
+    it "get_intent(intent_id = nil)" do
       randSession.should respond_to(:get_intent)
     end
 
     ## Returns the list of entities in the current randSession.
-    it ".entities" do
+    it ".entities(entity_id = nil)" do
       randSession.should respond_to(:entities)
     end
 
@@ -62,7 +62,7 @@ describe Wit::REST::Session do
       randSession.should respond_to(:add_value)
     end
 
-    it ".delete_value(entity_id)" do
+    it ".delete_value(entity_id, delete_value)" do
       randSession.should respond_to(:delete_value)
     end
 

@@ -1,20 +1,21 @@
+## client.rb
+## Facilitates the secure connection between the Wit servers and ruby application.
+## Quite confusing as Net::HTTP and Net::HTTPs is a messy library.
+## Do look it up if you need more help understanding!
+
 module Wit
   module REST
     ## Wit::Session::Client class holds the authentication parameters and
     ## handles making the HTTP requests to the Wit API. These methods should be
     ## internally called and never called directly from the user.
 
-    ## An example call to instantiate client is done like this:
+    ## An example call to instantiate client is done like this with defaults:
     ##
-    ## => @client = Wit::Session:Client.new auth_token
+    ## => @client = Wit::Session:Client.new
     ##
     class Client
 
-
-      ## HTTP Header for API calls to Wit
-    #  HTTP_HEADERS = {
-      #    "Authorization" => "Bearer #{@auth_token}"
-    #  }
+      ## Default settings for the client connection to the Wit api.
       DEFAULTS = {
           :token => ENV["WIT_AI_TOKEN"],
           :addr => 'api.wit.ai',
@@ -30,6 +31,8 @@ module Wit
           :retry_limit => 1,
       }
 
+      ## Allows for the reading of the last request, last response, and the
+      ## current session.
       attr_reader :last_req, :last_response, :session
 
       ## Initialize the new instance with either the default parameters or
@@ -57,21 +60,19 @@ module Wit
 
         ## Define the actual method for Wit::Session:Client
         define_method rest_method do |path|#|path, params|
-        #  params = twilify args[0]; params = {} if params.empty?
-        #  unless args[1] # build the full path unless already given
-        #    path = "#{path}.json"
-        #    path << "?#{url_encode(params)}" if rest_method == :get && !params.empty?
-        #  end
           request = method_rest_class.new path, {"Authorization" => "Bearer #{@auth_token}"}
-        # request.basic_auth @account_sid, @auth_token
           #request.set_form_data(params)#params if [:post, :put].include?(rest_method)
-
           return connect_send(request)
         end
       end
 
 #################################
       private
+
+      ## Setup the session that allows for calling of
+      def setup_session
+        @session = Wit::REST::Session.new(self)
+      end
 
       ## Used to setup a connection using Net::HTTP object when making requests
       ## to the API.
@@ -84,7 +85,6 @@ module Wit
           @params[:proxy_user], @params[:proxy_pass]
           )
         setup_ssl
-
         ## Set timeouts
         @conn.open_timeout = @params[:timeout]
         @conn.read_timeout = @params[:timeout]
@@ -101,29 +101,28 @@ module Wit
         end
       end
 
+      ## Connect and send the given request to Wit server.
       def connect_send(request)
+        ## Set the last request parameter
         @last_req = request
+        ## Set the retries if necessary to send again.
         left_retries = @params[:retry_limit]
         ## Start sending request
         begin
+          ## Save last response and depending on the response, return back the
+          ## given body as a hash.
           response = @conn.request request
           @last_response = response
-          #binding.pry
-          #if response.code == "200"
-          #  binding.pry
-        #end
           case response.code
             when "200" then MultiJson.load response.body
-            when "401" then raise Unauthorized, "Incorrect token or not set. Set ENV["WIT_AI_TOKEN"] or pass into the options parameter into :token"
+            when "401" then raise Unauthorized, "Incorrect token or not set. Set ENV[\"WIT_AI_TOKEN\"] or pass into the options parameter as :token"
             #else raise BadResponse, "response code: #{response.status}"
           end
 
         end
       end
 
-      def setup_session
-        @session = Wit::REST::Session.new(self)
-      end
+
     end
   end
 end
