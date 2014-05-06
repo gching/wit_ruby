@@ -1,5 +1,6 @@
 require 'net/http'
 require 'net/https'
+require 'multi_json'
 
 
 require "wit_ruby/version"

@@ -6,7 +6,7 @@ module Wit
       end
 
       def send_message(message)
-
+         return @client.get("/message?q=#{message}")
       end
 
       def send_sound_message(sound)

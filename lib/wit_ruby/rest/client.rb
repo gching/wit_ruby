@@ -12,9 +12,9 @@ module Wit
 
 
       ## HTTP Header for API calls to Wit
-      HTTP_HEADERS = {
-          'Authorization' => 'Bearer #{@auth_token}'
-      }
+    #  HTTP_HEADERS = {
+      #    "Authorization" => "Bearer #{@auth_token}"
+    #  }
       DEFAULTS = {
           :addr => 'api.wit.ai',
           :port => 443,
@@ -34,7 +34,7 @@ module Wit
       ## Initialize the new instance with the given auth_token.
       def initialize(auth_token, options = {})
         @auth_token = auth_token.strip
-        @params = DEFAULTS.merge! options
+        @params = DEFAULTS.merge options
         setup_conn
         setup_session
       end
@@ -51,16 +51,17 @@ module Wit
         method_rest_class = Net::HTTP.const_get rest_method.to_s.capitalize
 
         ## Define the actual method for Wit::Session:Client
-        define_method rest_method do |path, *args|
+        define_method rest_method do |path|#|path, params|
         #  params = twilify args[0]; params = {} if params.empty?
         #  unless args[1] # build the full path unless already given
         #    path = "#{path}.json"
         #    path << "?#{url_encode(params)}" if rest_method == :get && !params.empty?
         #  end
-          request = method_rest_class.new path, HTTP_HEADERS
+          request = method_rest_class.new path, {"Authorization" => "Bearer #{@auth_token}"}
         # request.basic_auth @account_sid, @auth_token
-          request.form_data = params if [:post, :put].include?(rest_method)
-          connect_send request
+          #request.set_form_data(params)#params if [:post, :put].include?(rest_method)
+
+          return connect_send(request)
         end
       end
 
@@ -97,11 +98,26 @@ module Wit
 
       def connect_send(request)
         @last_req = request
-        left_retries = @config[:retry_limit]
+        left_retries = @params[:retry_limit]
+        ## Start sending request
+        begin
+          response = @conn.request request
+          @last_response = response
+          #binding.pry
+          #if response.code == "200"
+          #  binding.pry
+        #end
+          case response.code
+            when "200" then MultiJson.load response.body
+            when "401" then raise Unauthorized, "incorrect token set for Wit.token set an env for WIT_TOKEN or set Wit::TOKEN manually"
+            #else raise BadResponse, "response code: #{response.status}"
+          end
+
+        end
       end
 
       def setup_session
-        @session = Wit::REST::Session.new(@auth_token)
+        @session = Wit::REST::Session.new(self)
       end
     end
   end
