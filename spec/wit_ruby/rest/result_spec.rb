@@ -6,8 +6,9 @@ describe Wit::REST::Result do
   let(:randHash) {{"a" => "a", "b" => "b"}}
   let(:result) {Wit::REST::Result.new(randHash)}
 
-  it "should have an intance of the original hash" do
-    expect(result.instance_variable_get("@originalHash")).to eql(randHash)
+
+  it "should have an instance of the original hash" do
+    expect(result.hash).to eql(randHash)
   end
 
   it "should raise an error for a method that is not in the attributes of the hash" do

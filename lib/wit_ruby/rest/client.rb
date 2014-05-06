@@ -114,7 +114,7 @@ module Wit
           response = @conn.request request
           @last_response = response
           case response.code
-            when "200" then MultiJson.load response.body
+            when "200" then Wit::REST::Result.new(MultiJson.load response.body)
             when "401" then raise Unauthorized, "Incorrect token or not set. Set ENV[\"WIT_AI_TOKEN\"] or pass into the options parameter as :token"
             #else raise BadResponse, "response code: #{response.status}"
           end

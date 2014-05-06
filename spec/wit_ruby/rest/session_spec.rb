@@ -69,7 +69,8 @@ describe Wit::REST::Session do
 ################# Functionalities with API mockup ###########################
 
   describe "Sending message" do
-    let(:result) { session.send_message(message)}
+    let(:result) {session.send_message(message)}
+    let(:result_hash){result.hash}
 
     before do
       VCR.insert_cassette 'message', record: :new_episodes
@@ -78,10 +79,16 @@ describe Wit::REST::Session do
       VCR.eject_cassette
     end
 
-    it "should return a hash" do
-      result.class.should be_eql Hash
+    it "should return an object of class Result" do
+      expect(result.class).to eql(Wit::REST::Result)
+    end
+
+    it "should have a message id method" do
+      expect(result.msg_id).should eql(result.hash["msg_id"])
     end
 
   end
+
+
 
 end

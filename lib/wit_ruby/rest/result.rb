@@ -6,9 +6,15 @@ module Wit
   module REST
     class Result
 
+
     ## Instantiates with a given hash.
     def initialize(resultHash)
       @originalHash = resultHash
+    end
+
+    ## Returns the orginalHash instance variable.
+    def hash
+      return @originalHash
     end
 
     ## Checks if the method is one of the keys in the hash.
