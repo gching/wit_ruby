@@ -114,7 +114,7 @@ module Wit
         #end
           case response.code
             when "200" then MultiJson.load response.body
-            when "401" then raise Unauthorized, "incorrect token set for Wit.token set an env for WIT_TOKEN or set Wit::TOKEN manually"
+            when "401" then raise Unauthorized, "Incorrect token or not set. Set ENV["WIT_AI_TOKEN"] or pass into the options parameter into :token"
             #else raise BadResponse, "response code: #{response.status}"
           end
 
