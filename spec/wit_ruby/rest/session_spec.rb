@@ -8,6 +8,7 @@ describe Wit::REST::Session do
   let(:randClient) {"randomClient"}
   let(:message) {"Hi"}
   let(:randSession) {Wit::REST::Session.new(randClient)}
+  let(:session) {Wit::REST::Client.new.session}
 
 
   ## Testing for method response
@@ -79,11 +80,9 @@ describe Wit::REST::Session do
 ################# Functionalities with API mockup ###########################
 
   describe "Sending message" do
-    let(:session) {pry; Wit::REST::Client.new(ENV["WIT_AI_TOKEN"]).session}
     let(:result) { session.send_message(message)}
 
     before do
-
       VCR.insert_cassette 'message', record: :new_episodes
     end
     after do
@@ -91,7 +90,6 @@ describe Wit::REST::Session do
     end
 
     it "should return a hash" do
-      puts result
       result.class.should be_eql Hash
     end
 

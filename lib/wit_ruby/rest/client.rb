@@ -16,6 +16,7 @@ module Wit
       #    "Authorization" => "Bearer #{@auth_token}"
     #  }
       DEFAULTS = {
+          :token => ENV["WIT_AI_TOKEN"],
           :addr => 'api.wit.ai',
           :port => 443,
           :use_ssl => true,
@@ -31,10 +32,14 @@ module Wit
 
       attr_reader :last_req, :last_response, :session
 
-      ## Initialize the new instance with the given auth_token.
-      def initialize(auth_token, options = {})
-        @auth_token = auth_token.strip
+      ## Initialize the new instance with either the default parameters or
+      ## given parameters.
+      ## Token is either the set token in ENV["WIT_AI_TOKEN"] or given in the
+      ## options.
+      def initialize(options = {})
+        ## Token is overidden if given in set params.
         @params = DEFAULTS.merge options
+        @auth_token = @params[:token].strip
         setup_conn
         setup_session
       end
