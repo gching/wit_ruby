@@ -1,10 +1,9 @@
 language: ruby
 cache: bundler
-
 rvm:
-  - jruby
-  - 2.0.0
-
-env: WIT_AI_TOKEN=random_auth_token
-
-script: 'bundle exec rake'
+- jruby
+- 2.0.0
+script: bundle exec rake
+env:
+  global:
+    secure: TspoESXh5kwkswN8DjNHkcT50zTa6wzCoF3Q/wQ8rmH9aSpke55nh81+T29OXMNsTxdSvoj93KRC3U2MHhRYM+aIKdtjwXFClTERbWKJmcFlkEWf/1LVxYRLqR/jMfb9gIkDQJ10vB1kFqZ+niShcQGgdfJGZn0y4cucA/ZPG9I=
