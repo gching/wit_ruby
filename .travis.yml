@@ -5,5 +5,6 @@ rvm:
   - jruby
   - 2.0.0
 
+env: WIT_AI_TOKEN=random_auth_token
 
 script: 'bundle exec rake'
