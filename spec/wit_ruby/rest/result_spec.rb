@@ -4,7 +4,10 @@ require 'spec_helper'
 
 describe Wit::REST::Result do
   let(:randHash) {{"a" => "a", "b" => "b"}}
-  let(:result) {Wit::REST::Result.new(randHash)}
+  let(:rand_path) {"rand_path"}
+  let(:rand_body) {"rand_body"}
+  let(:rest_code) {"post"}
+  let(:result) {Wit::REST::Result.new(randHash, rest_code, rand_path, rand_body)}
 
 
   it "should have an instance of the original hash" do
@@ -24,4 +27,12 @@ describe Wit::REST::Result do
       expect{result.send(key)}.not_to raise_error
     end
   end
+
+
+  it "should have an optional parameters to store the original request's body and pth" do
+    expect(result.restCode).to eql(rest_code)
+    expect(result.path).to eql(rand_path)
+    expect(result.body).to eql(rand_body)
+  end
+
 end

@@ -54,4 +54,10 @@ describe Wit::REST::Client do
     @client = Wit::REST::Client.new(token: rand_auth)
     expect(@client.instance_variable_get("@session")).to be_true
   end
+
+
+  it "should be able to do an API call when given a result object" do
+    @client = Wit::REST::Client.new(token: rand_auth)
+    expect(@client).to respond_to(:request_from_result)
+  end
 end

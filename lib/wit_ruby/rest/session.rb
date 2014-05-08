@@ -76,6 +76,17 @@ module Wit
 
       end
 
+      ## Used to refresh the results from the given results.
+      def refresh_results(result)
+        ## Call client with refresh results method
+        return @client.request_from_result(result.restCode, result.path, result.body)
+      end
+
+      ## Used to refresh the last response given from the last request.
+      def refresh_last
+        last_result = @client.last_result
+        return @client.request_from_result(last_result.restCode, last_result.path, last_result.body)
+      end
 
 
     end

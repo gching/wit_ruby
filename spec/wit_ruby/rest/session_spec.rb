@@ -66,6 +66,8 @@ describe Wit::REST::Session do
     end
   end
 
+
+
 ################# Functionalities with API mockup ###########################
 
   describe "Sending message" do
@@ -87,7 +89,35 @@ describe Wit::REST::Session do
       expect(result.msg_id).should eql(result.hash["msg_id"])
     end
 
+
+
+
+    describe "caching" do
+      ## Use webmock to disable the network connection after the api request
+      ## We use the simple sending message method for testing.
+      before do
+        @results = session.send_message(message)
+        stub_request(:any, /api.wit.ai/).to_timeout
+      end
+
+
+
+        it "must be able refresh and resend the call to the API given the result class" do
+          expect{session.refresh_results(@results)}.to raise_error(Timeout::Error)
+        end
+
+        it "should be able to refresh the last result" do
+          expect{session.refresh_last}.to raise_error(Timeout::Error)
+        end
+
+
+
+    end
+
   end
+
+########################### Caching #########################################
+
 
 
 

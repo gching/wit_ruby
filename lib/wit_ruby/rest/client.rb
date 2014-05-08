@@ -33,7 +33,7 @@ module Wit
 
       ## Allows for the reading of the last request, last response, and the
       ## current session.
-      attr_reader :last_req, :last_response, :session
+      attr_reader :last_req, :last_response, :session, :last_result
 
       ## Initialize the new instance with either the default parameters or
       ## given parameters.
@@ -64,6 +64,15 @@ module Wit
           #request.set_form_data(params)#params if [:post, :put].include?(rest_method)
           return connect_send(request)
         end
+      end
+
+      ## Takes in a body and path and creates a net/http class and uses it to call a request to API
+      def request_from_result(rest, path, body)
+        method_rest_class = Net::HTTP.const_get rest.capitalize
+        refresh_request = method_rest_class.new path, {"Authorization" => "Bearer #{@auth_token}"}
+        refresh_request.set_form_data(body) unless body == nil
+        ## Connect and send it to the API server.
+        return connect_send(refresh_request)
       end
 
 #################################
@@ -114,12 +123,18 @@ module Wit
           response = @conn.request request
           @last_response = response
           case response.code
-            when "200" then Wit::REST::Result.new(MultiJson.load response.body)
+            when "200" then save_result_and_return(request, response)
             when "401" then raise Unauthorized, "Incorrect token or not set. Set ENV[\"WIT_AI_TOKEN\"] or pass into the options parameter as :token"
             #else raise BadResponse, "response code: #{response.status}"
           end
 
         end
+      end
+      
+      ## Save it into the instance last_result and return it.
+      def save_result_and_return(request, response)
+        @last_result = Wit::REST::Result.new(MultiJson.load(response.body), request.method, request.path, request.body)
+        return @last_result
       end
 
 
