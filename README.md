@@ -45,7 +45,7 @@ You can call methods on it and if it matches the result's hash, it will return i
 
     $ ## results.hash = {"a" => "a"}
     $ results.a
-    $ ## => "a
+    $  => "a"
 
 ## Contributing
 
