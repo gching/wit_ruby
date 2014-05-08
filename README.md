@@ -42,11 +42,10 @@ As of 0.0.1, only sending a message is available.
 
 This return a result class that allows for you to easily access the results of the API call. The results is converted to a hash and is saved in this result class.
 You can call methods on it and if it matches the result's hash, it will return it's value. For example,
+
     $ ## results.hash = {"a" => "a"}
     $ results.a
     $ ## => "a
-
-    "
 
 ## Contributing
 
