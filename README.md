@@ -1,8 +1,12 @@
-[![Build Status](https://travis-ci.org/gching/wit_ruby.svg?branch=master)](https://travis-ci.org/gching/wit_ruby)[travis]
+
 
 # WitRuby
 
-Provides a Ruby interface with the Wit.ai API.
+Provides a Ruby API Wrapper for the Wit.ai API. Still implementing most functionalities.
+
+[![Build Status](https://travis-ci.org/gching/wit_ruby.svg?branch=master)](https://travis-ci.org/gching/wit_ruby)
+[![Gem Version](https://badge.fury.io/rb/wit_ruby.png)](http://badge.fury.io/rb/wit_ruby)
+[![Coverage Status](https://coveralls.io/repos/gching/wit_ruby/badge.png?branch=master)](https://coveralls.io/r/gching/wit_ruby?branch=master)
 
 ## Installation
 
@@ -20,9 +24,33 @@ Or install it yourself as:
 
 ## Usage
 
-TODO: Write usage instructions here
+Remember to put this up to access it!
+
+    $ require 'wit_ruby'
+
+To start using the wrapper, create a client with an authorization token given from Wit.ai. Set this either in ENV["WIT_AI_TOKEN"] or pass it on it the parameters
+
+    $ client = Wit::REST::Client.new("INSERT_AUTH_TOKEN_HERE_OR_DEFAULT_TO_ENV")
+
+The client provides also a session for you to mainly do API calls. I suggest you save the session somewhere for easy access.
+
+    $ session = client.session
+
+As of 0.0.1, only sending a message is available.
+
+    $ results = session.send_message("Your Message")
+
+This return a result class that allows for you to easily access the results of the API call. The results is converted to a hash and is saved in this result class.
+You can call methods on it and if it matches the result's hash, it will return it's value. For example,
+    $ ## results.hash = {"a" => "a"}
+    $ results.a
+    $ ## => "a
+
+    "
 
 ## Contributing
+
+I am a beginner developer so do contribute or help as much as possible! I definitely need to learn a lot :).
 
 1. Fork it
 2. Create your feature branch (`git checkout -b my-new-feature`)
