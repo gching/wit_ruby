@@ -86,7 +86,7 @@ describe Wit::REST::Session do
     end
 
     it "should have a message id method" do
-      expect(result.msg_id).should eql(result.hash["msg_id"])
+      expect(result.msg_id).to eql(result.hash["msg_id"])
     end
 
 
@@ -115,10 +115,6 @@ describe Wit::REST::Session do
     end
 
   end
-
-########################### Caching #########################################
-
-
 
 
 end
