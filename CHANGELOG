@@ -1,0 +1,2 @@
+== 0.0.1
+* Implemented connection with wit.ai API and sending a text message (GET)
