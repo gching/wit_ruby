@@ -136,5 +136,18 @@ describe Wit::REST::Session do
 
   end
 
+  describe "Get intents" do
+    let(:get_intent) {session.get_intent}
+
+    before do
+      VCR.insert_cassette 'get_intents', record: :new_episodes
+    end
+    after do
+      VCR.eject_cassette
+    end
+    it "should have returned an array" do
+      expect(get_intent.hash.class).to eql(Array)
+    end
+  end
 
 end

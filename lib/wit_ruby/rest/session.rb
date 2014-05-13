@@ -30,6 +30,9 @@ module Wit
       ## GET - returns either a list of intents if no id is given.
       ##     - returns the specific intent of the id given.
       def get_intent(intent_id = nil)
+
+        ## TODO - Raise error if no intents
+        return @client.get("/intents")
       end
 
       ## TODO - look into corpus
