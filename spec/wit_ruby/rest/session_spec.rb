@@ -117,4 +117,24 @@ describe Wit::REST::Session do
   end
 
 
+  describe "Geting message info" do
+    let(:sent_message_result) {session.send_message(message)}
+    let(:sent_message_id) {sent_message_result.msg_id}
+    let(:resulting_message) {session.get_message(sent_message_id)}
+
+    before do
+      VCR.insert_cassette 'get_message', record: :new_episodes
+    end
+    after do
+      VCR.eject_cassette
+    end
+
+    it "should get back the same message and have the same has as the sent message results" do
+      expect(resulting_message.msg_id).to eql(sent_message_id)
+      expect(resulting_message.msg_body).to eql(sent_message_result.msg_body)
+    end
+
+  end
+
+
 end

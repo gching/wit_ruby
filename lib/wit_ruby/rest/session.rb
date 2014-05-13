@@ -22,8 +22,9 @@ module Wit
 
       ## GET - returns stored message for specific id.
       ## TODO - possibly renaming as it is ambigious compared to send_message.
+      ## TODO - Notify Wit.ai as there documentation does not include the stats parameter
       def get_message(message_id)
-
+        return @client.get("/messages/#{message_id}")
       end
 
       ## GET - returns either a list of intents if no id is given.
