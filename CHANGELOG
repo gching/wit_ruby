@@ -1,2 +1,6 @@
+== 0.0.2
+* Changed description in gemspec
+* Implemented API call to get specific information from a sent message from it's given ID (GET).
+
 == 0.0.1
-* Implemented connection with wit.ai API and sending a text message (GET)
+* Implemented connection with wit.ai API and sending a text message (GET).
