@@ -72,7 +72,7 @@ describe Wit::REST::Session do
 
   describe "Sending message" do
     let(:result) {session.send_message(message)}
-    let(:result_hash){result.hash}
+    let(:result_data){result.raw_data}
 
     before do
       VCR.insert_cassette 'message', record: :new_episodes
@@ -81,12 +81,12 @@ describe Wit::REST::Session do
       VCR.eject_cassette
     end
 
-    it "should return an object of class Result" do
-      expect(result.class).to eql(Wit::REST::Result)
+    it "should return an object of class Message" do
+      expect(result.class).to eql(Wit::REST::Message)
     end
 
     it "should have a message id method" do
-      expect(result.msg_id).to eql(result.hash["msg_id"])
+      expect(result.msg_id).to eql(result_data["msg_id"])
     end
 
 
@@ -146,7 +146,7 @@ describe Wit::REST::Session do
       VCR.eject_cassette
     end
     it "should have returned an array" do
-      expect(get_intent.hash.class).to eql(Array)
+      expect(get_intent.raw_data.class).to eql(Array)
     end
   end
 

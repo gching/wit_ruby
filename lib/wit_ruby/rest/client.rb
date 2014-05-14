@@ -130,11 +130,15 @@ module Wit
 
         end
       end
-      
+
       ## Save it into the instance last_result and return it.
       def save_result_and_return(request, response)
-        @last_result = Wit::REST::Result.new(MultiJson.load(response.body), request.method, request.path, request.body)
-        return @last_result
+        ## Parse the data
+        parsed_data = MultiJson.load(response.body)
+        ## Save the last result as the super class Result
+        @last_result = Wit::REST::Result.new(parsed_data, request.method, request.path, request.body)
+        ## Return it
+        return  @last_result
       end
 
 

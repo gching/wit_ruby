@@ -8,16 +8,16 @@ module Wit
 
 
     ## Instantiates with a given hash.
-    def initialize(resultHash, requestRest=nil, requestPath=nil, requestBody=nil)
-      @originalHash = resultHash
+    def initialize(resultData, requestRest=nil, requestPath=nil, requestBody=nil)
+      @rawdata = resultData
       @requestRest = requestRest
       @requestPath = requestPath
       @requestBody = requestBody
     end
 
     ## Returns the orginalHash instance variable.
-    def hash
-      return @originalHash
+    def raw_data
+      return @rawdata
     end
 
     ## Returns the REST code from the given request
@@ -39,7 +39,7 @@ module Wit
     ## If it is then we can return the given value.
     ## If not, then raise a NoMethodError.
     def method_missing(possible_key, *args, &block)
-      @originalHash.has_key?(possible_key.to_s) ? @originalHash[possible_key.to_s] : super
+      @rawdata.has_key?(possible_key.to_s) ? @rawdata[possible_key.to_s] : super
     end
 
 

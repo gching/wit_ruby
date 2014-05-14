@@ -11,7 +11,7 @@ describe Wit::REST::Result do
 
 
   it "should have an instance of the original hash" do
-    expect(result.hash).to eql(randHash)
+    expect(result.raw_data).to eql(randHash)
   end
 
   it "should raise an error for a method that is not in the attributes of the hash" do

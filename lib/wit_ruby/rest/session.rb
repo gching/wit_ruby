@@ -11,7 +11,9 @@ module Wit
       end
       ## GET - extracted meaning form a sentence
       def send_message(message)
-         return @client.get("/message?q=#{message}")
+        ## Recieve unwrapped results
+        results = @client.get("/message?q=#{message}")
+        return Message.new(results.raw_data, results.restCode, results.path, results.body)
       end
 
       ## POST - extract meaning from a audio file
@@ -24,7 +26,8 @@ module Wit
       ## TODO - possibly renaming as it is ambigious compared to send_message.
       ## TODO - Notify Wit.ai as there documentation does not include the stats parameter
       def get_message(message_id)
-        return @client.get("/messages/#{message_id}")
+        results = @client.get("/messages/#{message_id}")
+        return Message.new(results.raw_data, results.restCode, results.path, results.body)
       end
 
       ## GET - returns either a list of intents if no id is given.
