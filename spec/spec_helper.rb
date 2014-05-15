@@ -7,6 +7,7 @@ require 'pry'
 
 require 'webmock/rspec'
 require 'vcr'
+require 'timeout'
 
 #VCR config
 VCR.configure do |c|

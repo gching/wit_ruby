@@ -127,7 +127,9 @@ describe Wit::REST::Session do
     let(:sent_message_result) {session.send_message(message)}
     describe "Getting back message info " do
       let(:sent_message_id) {sent_message_result.msg_id}
-      let(:resulting_message) {session.get_message(sent_message_id)}
+      let(:resulting_message) {
+        session.get_message(sent_message_id)
+      }
 
       before do
         VCR.insert_cassette 'get_message', record: :new_episodes
