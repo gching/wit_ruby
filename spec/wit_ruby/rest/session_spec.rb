@@ -30,8 +30,8 @@ describe Wit::REST::Session do
       randSession.should respond_to(:get_message)
     end
 
-    it "get_intent(intent_id = nil)" do
-      randSession.should respond_to(:get_intent)
+    it "get_intents(intent_id = nil)" do
+      randSession.should respond_to(:get_intents)
     end
 
     it ".entities(entity_id = nil)" do
@@ -143,7 +143,8 @@ describe Wit::REST::Session do
   end
 
   describe "Get intents" do
-    let(:get_intent) {session.get_intent}
+    let(:get_intent_arr) {session.get_intents}
+
 
     before do
       VCR.insert_cassette 'get_intents', record: :new_episodes
@@ -151,9 +152,32 @@ describe Wit::REST::Session do
     after do
       VCR.eject_cassette
     end
-    it "should have returned an array" do
-      expect(get_intent.raw_data.class).to eql(Array)
+    it "should have returned an array of intents in class MultiIntent if not given an id" do
+      expect(get_intent_arr.class).to eql(Wit::REST::MultiIntent)
+      expect(get_intent_arr[0].class).to eql(Wit::REST::Result)
     end
+
+  end
+
+  describe "Get specific intent" do
+    let(:get_intent_arr) {session.get_intents}
+    let(:intent_id) {get_intent_arr[0].id}
+    let(:intent_name) {get_intent_arr[0].name}
+    let(:get_intent_id) {session.get_intents(intent_id)}
+    let(:get_intent_name) {session.get_intents(intent_name)}
+    before do
+      VCR.insert_cassette 'get_intent_specific', record: :new_episodes
+    end
+    after do
+      VCR.eject_cassette
+    end
+
+    it "should return an intent result if given an id or name and must be same results" do
+      expect(get_intent_id.class).to eql(Wit::REST::Intent)
+      expect(get_intent_name.class).to eql(Wit::REST::Intent)
+      expect(get_intent_id.id).to eql(get_intent_name.id)
+    end
+
   end
 
 end

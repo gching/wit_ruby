@@ -8,9 +8,6 @@ module Wit
 
       def initialize(resultData, requestRest=nil, requestPath=nil, requestBody=nil)
         super
-      #  @entities = @rawdata["entities"].map do |entity_hash|
-        #  Entity.new(entity_hash)
-      #  end
         @expressions = @rawdata["expressions"].map do |expression_hash|
           Expression.new(expression_hash)
         end
@@ -37,6 +34,28 @@ module Wit
           entities_arr << entity.id unless entities_arr.include?(entity.id)
         end
         return entities_arr
+      end
+
+
+    end
+
+    class MultiIntent < Result
+      def initialize(resultData, requestRest=nil, requestPath=nil, requestBody=nil)
+        super
+        @intents = @rawdata.map do |intent|
+          Result.new(intent)
+        end
+      end
+
+
+      def [](num)
+        @intents[num]
+      end
+
+      def each
+        @intents.each do |intent|
+          lambda{intent}
+        end
       end
 
 

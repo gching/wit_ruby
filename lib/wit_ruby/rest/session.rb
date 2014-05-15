@@ -32,10 +32,16 @@ module Wit
 
       ## GET - returns either a list of intents if no id is given.
       ##     - returns the specific intent of the id given.
-      def get_intent(intent_id = nil)
-
+      def get_intents(intent_indicator = nil)
         ## TODO - Raise error if no intents
-        return @client.get("/intents")
+
+        ## No spefic id, so get list of intents or specific id, return it as Intent object
+        results = intent_indicator.nil? ? @client.get("/intents") : @client.get("/intents/#{intent_indicator}")
+
+        ## Same concept but wrap it around proper object
+        returnObject = intent_indicator.nil? ? MultiIntent : Intent
+        return returnObject.new(results.raw_data, results.restCode, results.restPath, results.restBody)
+
       end
 
       ## TODO - look into corpus

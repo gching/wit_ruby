@@ -125,7 +125,7 @@ module Wit
           case response.code
             when "200" then save_result_and_return(request, response)
             when "401" then raise Unauthorized, "Incorrect token or not set. Set ENV[\"WIT_AI_TOKEN\"] or pass into the options parameter as :token"
-            #else raise BadResponse, "response code: #{response.status}"
+            else raise BadResponse, "response code: #{response.status}"
           end
 
         end
@@ -143,5 +143,7 @@ module Wit
 
 
     end
+
+    class BadResponse < Exception; end
   end
 end

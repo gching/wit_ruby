@@ -86,3 +86,32 @@ describe Wit::REST::Intent do
 
 
 end
+
+describe Wit::REST::MultiIntent do
+  let(:json_two) {%([ {
+  "id" : "52bab833-e024-4f15-b927-8e0772d1540c",
+  "name" : "recover_password",
+  "doc" : "Recover password (which is different from Reset password).",
+  "metadata" : "password_23433253254"
+  }, {
+  "id" : "52bab833-9a1e-4bff-b659-99ee95e6c1f9",
+  "name" : "transfer",
+  "doc" : "Transfer some amount of money between two accounts."
+  }, {
+  "id" : "52bab833-3e23-4c67-9cfc-a0fed605bd77",
+  "name" : "show_movie",
+  "doc" : "Show a given movie."
+  } ])}
+  let(:rand_path) {"rand_path"}
+  let(:rand_body) {"rand_body"}
+  let(:rest_code) {"get"}
+  let(:multi_intent_results) {Wit::REST::MultiIntent.new(MultiJson.load(json_two), rand_path, rand_body, rest_code)}
+
+  it "should each be saved as a result object" do
+    binding.pry
+    multi_intent_results.each do |intent|
+      expect(intent.class).to eql Result
+    end
+  end
+
+end
