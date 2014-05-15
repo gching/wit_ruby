@@ -8,7 +8,6 @@ module Wit
     ## Wit::Session::Client class holds the authentication parameters and
     ## handles making the HTTP requests to the Wit API. These methods should be
     ## internally called and never called directly from the user.
-
     ## An example call to instantiate client is done like this with defaults:
     ##
     ## => @client = Wit::Session:Client.new
@@ -31,14 +30,15 @@ module Wit
           :retry_limit => 1,
       }
 
-      ## Allows for the reading of the last request, last response, and the
-      ## current session.
+      # Allows for the reading of the last request, last response, and the
+      # current session.
       attr_reader :last_req, :last_response, :session, :last_result
 
-      ## Initialize the new instance with either the default parameters or
-      ## given parameters.
-      ## Token is either the set token in ENV["WIT_AI_TOKEN"] or given in the
-      ## options.
+      ## Initialize the new instance with either the default parameters or given parameters.
+      ## Token can either be given in options or defaults to ENV["WIT_AI_TOKEN"]
+      ##
+      ## @param options [Hash] options to overide the defaults.
+      ## @return [Wit::REST::Client] new client connection.
       def initialize(options = {})
         ## Token is overidden if given in set params.
         @params = DEFAULTS.merge options
@@ -49,11 +49,16 @@ module Wit
 
 
       ## Change the given auth token.
+      ##
+      ## @param new_auth [String] new authorization token for client.
       def change_auth(new_auth)
         @auth_token = new_auth.strip
       end
 
       ## Defines each REST method for the given client. GET, PUT, POST and DELETE
+      ##
+      ## @param path [String] path for API call.
+      ## @return [Wit::REST::Result] results from the call.
       [:get, :put, :post, :delete].each do |rest_method|
         ## Get the given class for Net::HTTP depending on the current method.
         method_rest_class = Net::HTTP.const_get rest_method.to_s.capitalize
@@ -66,7 +71,11 @@ module Wit
         end
       end
 
-      ## Takes in a body and path and creates a net/http class and uses it to call a request to API
+      ## Takes in a body and path and creates a net/http class and uses it to call a request to API.
+      ##
+      ## @param rest [String] rest code for the call.
+      ## @param path [String] path for the call.
+      ## @param body [Hash] body of the call.
       def request_from_result(rest, path, body)
         method_rest_class = Net::HTTP.const_get rest.capitalize
         refresh_request = method_rest_class.new path, {"Authorization" => "Bearer #{@auth_token}"}
@@ -78,7 +87,7 @@ module Wit
 #################################
       private
 
-      ## Setup the session that allows for calling of
+      ## Setup the session that allows for calling of each method.
       def setup_session
         @session = Wit::REST::Session.new(self)
       end
@@ -111,6 +120,9 @@ module Wit
       end
 
       ## Connect and send the given request to Wit server.
+      ##
+      ## @param request [Net::HTTP] specific request class from Net::HTTP library.
+      ## @return [Wit::REST::Result] result from request.
       def connect_send(request)
         ## Set the last request parameter
         @last_req = request
@@ -132,6 +144,9 @@ module Wit
       end
 
       ## Save it into the instance last_result and return it.
+      ##
+      ## @param request [Net::HTTP] specific request class from Net::HTTP library.
+      ## @param response [Net::HTTP] response from call to API.
       def save_result_and_return(request, response)
         ## Parse the data
         parsed_data = MultiJson.load(response.body)

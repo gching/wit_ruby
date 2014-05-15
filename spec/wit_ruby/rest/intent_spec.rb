@@ -108,7 +108,6 @@ describe Wit::REST::MultiIntent do
   let(:multi_intent_results) {Wit::REST::MultiIntent.new(MultiJson.load(json_two), rand_path, rand_body, rest_code)}
 
   it "should each be saved as a result object" do
-    binding.pry
     multi_intent_results.each do |intent|
       expect(intent.class).to eql Result
     end

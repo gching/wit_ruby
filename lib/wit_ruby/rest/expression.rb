@@ -3,6 +3,7 @@
 
 module Wit
   module REST
+    ## Internal wrapper for expressions in an intent. 
     class Expression < Result
 
 

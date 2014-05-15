@@ -6,10 +6,15 @@ module Wit
   module REST
     class Session
       ## Initialize with the given client.
+      ##
+      ## @param client [Wit::REST::Client] client of the connection
       def initialize(client)
         @client = client
       end
-      ## GET - extracted meaning form a sentence
+      ## GET - extracted meaning from a sentence.
+      ##
+      ## @param message [String] sentence being examined from API.
+      ## @return [Wit::REST::Message] message results from API.
       def send_message(message)
         ## Recieve unwrapped results
         results = @client.get("/message?q=#{message}")
@@ -19,12 +24,17 @@ module Wit
       ## POST - extract meaning from a audio file
       ## Do check the certain documentation of what the specific audio file
       ## should be.
+      ##
+      ## @param sound [String] path to sound file.
       def send_sound_message(sound)
       end
 
       ## GET - returns stored message for specific id.
       ## TODO - possibly renaming as it is ambigious compared to send_message.
       ## TODO - Notify Wit.ai as there documentation does not include the stats parameter
+      ##
+      ## @param message_id [String] message id of message in API servers.
+      ## @return [Wit::REST::Message] message results from the given id.
       def get_message(message_id)
         results = @client.get("/messages/#{message_id}")
         return Message.new(results.raw_data, results.restCode, results.restPath, results.restBody)
@@ -32,6 +42,9 @@ module Wit
 
       ## GET - returns either a list of intents if no id is given.
       ##     - returns the specific intent of the id given.
+      ##
+      ## @param intent_indicator [String] the id or name of the intent
+      ## @return [Wit:REST::Intent] [Wit::REST::MultiIntent] results of intent call to API.
       def get_intents(intent_indicator = nil)
         ## TODO - Raise error if no intents
 
@@ -89,19 +102,28 @@ module Wit
 
       end
 
-      ## Used to refresh the results from the given results.
+      ## Used to refresh the results from the given results. Only applicable to result objects that directly
+      ## came from the session.
+      ##
+      ## @param result [Wit::REST::Result] result from a call that is going to be refreshed.
+      ## @return [Wit::REST::Result] result back that will be wrapped around it's specific wrapper object
       def refresh_results(result)
         ## Call client with refresh results method
         ## Checks to see if its part of the specified objects in the Wit module
         ## Checks to see if the object is refreshable
         ## If it isn't part of one of these two, then raise error for not being refreshable.
-        unless  result.class.name.split("::")[0] == "Wit" && result.refreshable?
+        result_class = result.class
+        unless  result_class.name.split("::")[0] == "Wit" && result.refreshable?
           raise NotRefreshable.new(%(The inputted object with class "#{result.class}" is not refreshable.))
         end
-        return @client.request_from_result(result.restCode, result.restPath, result.restBody)
+        refreshed_result = @client.request_from_result(result.restCode, result.restPath, result.restBody)
+        return result_class.new(refreshed_result.raw_data, refreshed_result.restCode, refreshed_result.restPath, refreshed_result.restBody)
       end
 
       ## Used to refresh the last response given from the last request.
+      ## TODO - fix wrapper
+      ##
+      ## @return [Wit::REST::Result] refreshed result from last result
       def refresh_last
         last_result = @client.last_result
         return @client.request_from_result(last_result.restCode, last_result.restPath, last_result.restBody)
