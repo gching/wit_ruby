@@ -36,6 +36,7 @@ module Wit
       ## @param message_id [String] message id of message in API servers.
       ## @return [Wit::REST::Message] message results from the given id.
       def get_message(message_id)
+        binding.pry
         results = @client.get("/messages/#{message_id}")
         return Message.new(results.raw_data, results.restCode, results.restPath, results.restBody)
       end
