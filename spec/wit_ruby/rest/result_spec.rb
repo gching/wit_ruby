@@ -31,8 +31,8 @@ describe Wit::REST::Result do
 
   it "should have an optional parameters to store the original request's body and pth" do
     expect(result.restCode).to eql(rest_code)
-    expect(result.path).to eql(rand_path)
-    expect(result.body).to eql(rand_body)
+    expect(result.restPath).to eql(rand_path)
+    expect(result.restBody).to eql(rand_body)
   end
 
 end

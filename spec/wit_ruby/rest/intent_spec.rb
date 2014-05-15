@@ -60,11 +60,28 @@ describe Wit::REST::Intent do
 
 
   it "should have a list of entities" do
-    pending
+    expect(intent_results.entities.class).to eql(Array)
+    expect(intent_results.entities[0].class).to eql(Wit::REST::Entity)
+  end
+  it "should have a list of expressions" do
+    expect(intent_results.expressions.class).to eql(Array)
+    expect(intent_results.expressions[0].class).to eql(Wit::REST::Expression)
   end
 
-  it "should have a list of expressions" do
-    pending
+  it "should have the right values in the entities" do
+    expect(intent_results.entities[0].role).to eql("dest")
+    expect(intent_results.entities[1].role).to eql("orig")
+  end
+
+  it "should have the right values for expressions" do
+    expect(intent_results.expressions[0].body).to eql("fly from incheon to sfo")
+    expect(intent_results.expressions[1].body).to eql("i wanna fly from JFK to SFO")
+  end
+  it "should return the body names for each expressions as an array of strings" do
+    expect(intent_results.expression_bodies).to eql(["fly from incheon to sfo", "i wanna fly from JFK to SFO"])
+  end
+  it "should return used entities as an array of strings" do
+    expect(intent_results.entities_used).to eql(["wit$location"])
   end
 
 

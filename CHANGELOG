@@ -2,7 +2,8 @@
 * Changed description in gemspec
 * Implemented API call to get specific information from a sent message from it's given ID (GET).
 * Change results to be returned as specific objects that inherit from the original class Result.
-
+  Message, Intent, Entity, Expression are the specific wrappers for results.
+*
 
 == 0.0.1
 * Implemented connection with wit.ai API and sending a text message (GET).

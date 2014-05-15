@@ -13,7 +13,7 @@ module Wit
       def send_message(message)
         ## Recieve unwrapped results
         results = @client.get("/message?q=#{message}")
-        return Message.new(results.raw_data, results.restCode, results.path, results.body)
+        return Message.new(results.raw_data, results.restCode, results.restPath, results.restBody)
       end
 
       ## POST - extract meaning from a audio file
@@ -27,7 +27,7 @@ module Wit
       ## TODO - Notify Wit.ai as there documentation does not include the stats parameter
       def get_message(message_id)
         results = @client.get("/messages/#{message_id}")
-        return Message.new(results.raw_data, results.restCode, results.path, results.body)
+        return Message.new(results.raw_data, results.restCode, results.restPath, results.restBody)
       end
 
       ## GET - returns either a list of intents if no id is given.
@@ -86,13 +86,13 @@ module Wit
       ## Used to refresh the results from the given results.
       def refresh_results(result)
         ## Call client with refresh results method
-        return @client.request_from_result(result.restCode, result.path, result.body)
+        return @client.request_from_result(result.restCode, result.restPath, result.restBody)
       end
 
       ## Used to refresh the last response given from the last request.
       def refresh_last
         last_result = @client.last_result
-        return @client.request_from_result(last_result.restCode, last_result.path, last_result.body)
+        return @client.request_from_result(last_result.restCode, last_result.restPath, last_result.restBody)
       end
 
 
