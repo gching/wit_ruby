@@ -4,10 +4,12 @@
 module Wit
   module REST
 
+    ## Encompasses entity results.
     class Entity < Result
 
     end
 
+    ## Internal wrapper for multiple entities for a given result.
     class MultiEntity
       ## Creates an instance that holds array of intents.
       ##

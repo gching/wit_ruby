@@ -64,8 +64,9 @@ module Wit
       ## @param requestBody [Hash] body of the call.
       ## @return [Wit::REST::MultiIntent] object that holds the array of intents as result objects.
       def initialize(resultData, requestRest=nil, requestPath=nil, requestBody=nil)
-        super
-        @intents = @rawdata.map do |intent|
+        ## Pass in empty hash to default to method missing for everything not defined here.
+        super({}, requestRest, requestPath, requestBody)
+        @intents = resultData.map do |intent|
           Result.new(intent)
         end
       end
