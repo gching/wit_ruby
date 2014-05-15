@@ -2,7 +2,7 @@
 
 # WitRuby
 
-Provides a Ruby API Wrapper for the Wit.ai API. Still implementing most functionalities.
+Provides a Ruby API Wrapper for the Wit.ai API. Still implementing most functionalities. Go over to https://rubygems.org/gems/wit_ruby for specific information and documentation.
 
 [![Build Status](https://travis-ci.org/gching/wit_ruby.svg?branch=master)](https://travis-ci.org/gching/wit_ruby)
 [![Gem Version](https://badge.fury.io/rb/wit_ruby.png)](http://badge.fury.io/rb/wit_ruby)
@@ -36,16 +36,38 @@ The client provides also a session for you to mainly do API calls. I suggest you
 
     $ session = client.session
 
-As of 0.0.1, only sending a message is available.
+As of 0.0.2, only sending a message, getting message information and intent specific calls are implemented.
+
+## Message
+
+To send a specific message, use the saved session to send a given string as a parameter.
 
     $ results = session.send_message("Your Message")
 
-This return a result class that allows for you to easily access the results of the API call. The results is converted to a hash and is saved in this result class.
+To get a specific messages information from the wit.ai, pass in the message's ID and use the method below.
+
+    $ results = session.get_message("Message ID")
+
+## Intent
+
+To get a list of intents in the specific instance over at wit.ai.
+
+    $ ## Array of all intents used.
+    $ results = session.get_intents
+
+To get a specific intent information, pass in it's ID or name.
+
+    $ ## Specific intent information.
+    $ results = session.get_intents("Intent ID or Name")
+
+## Result
+
+Every method returns a class wrapper corresponding specifically to that result. The superclass that is inherited (Wit::REST::Result) allows for you to easily access the results of the API call. The results is converted to a hash and is saved in this result class.
 You can call methods on it and if it matches the result's hash, it will return it's value. For example,
 
-    $ ## results.hash = {"a" => "a"}
+    $ ## results.hash = {"a" => "b"}
     $ results.a
-    $  => "a"
+    $  => "b"
 
 ## Contributing
 

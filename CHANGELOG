@@ -1,7 +1,7 @@
 == 0.0.2
-* Intent specific API calls functional.
-* Changed description in gemspec.
 * Implemented API call to get specific information from a sent message from it's given ID (GET).
+* Intent specific API calls functional (GET).
+* Changed description in gemspec.
 * Change results to be returned as specific objects that inherit from the original class Result.
   Message, Intent, Entity, Expression are the specific wrappers for results.
 * Made error check so that only specific results can be refreshed. Refreshable objects are ones that
