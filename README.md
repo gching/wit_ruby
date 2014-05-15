@@ -2,7 +2,7 @@
 
 # WitRuby
 
-Provides a Ruby API Wrapper for the Wit.ai API. Still implementing most functionalities. Go over to https://rubygems.org/gems/wit_ruby for specific information and documentation.
+Provides a unofficial Ruby API Wrapper for the Wit.ai API. Still implementing most functionalities. Go over to https://rubygems.org/gems/wit_ruby for specific information and documentation.
 
 [![Build Status](https://travis-ci.org/gching/wit_ruby.svg?branch=master)](https://travis-ci.org/gching/wit_ruby)
 [![Gem Version](https://badge.fury.io/rb/wit_ruby.png)](http://badge.fury.io/rb/wit_ruby)
@@ -28,9 +28,12 @@ Remember to put this up to access it!
 
     $ require 'wit_ruby'
 
-To start using the wrapper, create a client with an authorization token given from Wit.ai. Set this either in ENV["WIT_AI_TOKEN"] or pass it on it the parameters
+To start using the wrapper, create a client with an authorization token given from Wit.ai. Set this either in ENV["WIT_AI_TOKEN"] or pass it on it the parameters as a hash. Default settings can be overridden by this hash as well.
 
-    $ client = Wit::REST::Client.new("INSERT_AUTH_TOKEN_HERE_OR_DEFAULT_TO_ENV")
+    $ ## Default to ENV["WIT_AI_TOKEN"]
+    $ client = Wit::REST::Client.new()
+    $ ## Override token when created
+    $ client = Wit::REST::Client.new(token: "Insert Token Here")
 
 The client provides also a session for you to mainly do API calls. I suggest you save the session somewhere for easy access.
 
