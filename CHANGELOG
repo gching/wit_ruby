@@ -3,7 +3,8 @@
 * Implemented API call to get specific information from a sent message from it's given ID (GET).
 * Change results to be returned as specific objects that inherit from the original class Result.
   Message, Intent, Entity, Expression are the specific wrappers for results.
-*
+* Made error check so that only specific results can be refreshed. Refreshable objects are ones that
+  are directly returned from session calls.
 
 == 0.0.1
 * Implemented connection with wit.ai API and sending a text message (GET).
