@@ -56,6 +56,11 @@ module Wit
         @rawdata.has_key?(possible_key.to_s) ? @rawdata[possible_key.to_s] : super
       end
 
+      ## Method to check if this current object is refreshable.
+      ## It is refresahble if the request parameters for checking is not nil
+      def refreshable?
+        !@requestRest.nil?
+      end
 
 
 

@@ -86,6 +86,12 @@ module Wit
       ## Used to refresh the results from the given results.
       def refresh_results(result)
         ## Call client with refresh results method
+        ## Checks to see if its part of the specified objects in the Wit module
+        ## Checks to see if the object is refreshable
+        ## If it isn't part of one of these two, then raise error for not being refreshable.
+        unless  result.class.name.split("::")[0] == "Wit" && result.refreshable?
+          raise NotRefreshable.new(%(The inputted object with class "#{result.class}" is not refreshable.))
+        end
         return @client.request_from_result(result.restCode, result.restPath, result.restBody)
       end
 
@@ -95,7 +101,8 @@ module Wit
         return @client.request_from_result(last_result.restCode, last_result.restPath, last_result.restBody)
       end
 
-
     end
+
+    class NotRefreshable < Exception; end
   end
 end

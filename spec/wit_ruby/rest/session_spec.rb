@@ -7,6 +7,7 @@ describe Wit::REST::Session do
   let(:auth) {"randomAuth"}
   let(:randClient) {"randomClient"}
   let(:message) {"Hi"}
+  let(:rand_hash) {{"a" => "a", "b" => "b"}}
   let(:randSession) {Wit::REST::Session.new(randClient)}
   let(:session) {Wit::REST::Client.new.session}
 
@@ -99,7 +100,7 @@ describe Wit::REST::Session do
         @results = session.send_message(message)
         stub_request(:any, /api.wit.ai/).to_timeout
       end
-
+      let(:random_result) {Wit::REST::Result.new(rand_hash)}
 
 
         it "must be able refresh and resend the call to the API given the result class" do
@@ -108,6 +109,11 @@ describe Wit::REST::Session do
 
         it "should be able to refresh the last result" do
           expect{session.refresh_last}.to raise_error(Timeout::Error)
+        end
+
+        it "should not be able to refresh a not refreshable object" do
+          expect{session.refresh_results("random_class")}.to raise_error(Wit::REST::NotRefreshable)
+          expect{session.refresh_results(random_result)}.to raise_error(Wit::REST::NotRefreshable)
         end
 
 

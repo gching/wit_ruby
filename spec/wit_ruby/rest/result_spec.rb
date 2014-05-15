@@ -8,7 +8,7 @@ describe Wit::REST::Result do
   let(:rand_body) {"rand_body"}
   let(:rest_code) {"post"}
   let(:result) {Wit::REST::Result.new(randHash, rest_code, rand_path, rand_body)}
-
+  let(:not_refresh_result) {Wit::REST::Result.new(randHash)}
 
   it "should have an instance of the original hash" do
     expect(result.raw_data).to eql(randHash)
@@ -33,6 +33,11 @@ describe Wit::REST::Result do
     expect(result.restCode).to eql(rest_code)
     expect(result.restPath).to eql(rand_path)
     expect(result.restBody).to eql(rand_body)
+  end
+
+  it "should be refereshable if rest parameters and path/body are given and not if it isn't given" do
+    expect(result.refreshable?).to be_true
+    expect(not_refresh_result.refreshable?).to be_false
   end
 
 end
