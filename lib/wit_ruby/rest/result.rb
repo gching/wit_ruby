@@ -74,8 +74,8 @@ module Wit
       ## If it is then we can return the given value.
       ## If not, then raise a NoMethodError.
       ##
-      ## @params [Symbol] possible method or key in the hash
-      ## @return [String] [Integer] [Hash] depending on the given results in the data.
+      ## @param possible_key [Symbol] possible method or key in the hash
+      ## @return [Class] depending on the given results in the data.
       def method_missing(possible_key, *args, &block)
         @rawdata.has_key?(possible_key.to_s) ? @rawdata[possible_key.to_s] : super
       end

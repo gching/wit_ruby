@@ -37,8 +37,8 @@ module Wit
       ## If it is then we can return the given value.
       ## If not, then go to method_missing in Wit::REST::Result.
       ##
-      ## @params [Symbol] possible method or key in the hash or entity.
-      ## @return [String] [Integer] [Hash] depending on the given results in the data.
+      ## @param possible_key [Symbol] possible method or key in the hash or entity.
+      ## @return [Class] depending on the given results in the data.
       def method_missing(possible_key, *args, &block)
         if @rawdata["outcome"]["entities"].has_key?(possible_key.to_s)
           entity_value = @rawdata["outcome"]["entities"][possible_key.to_s]
