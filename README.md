@@ -4,8 +4,7 @@
 
 Provides a unofficial Ruby API Wrapper for the Wit.ai API. Still implementing most functionalities. Go over to https://rubygems.org/gems/wit_ruby for specific information and documentation.
 
-{<img src="https://travis-ci.org/gching/wit_ruby.svg?branch=master" alt="Build Status" />}[https://travis-ci.org/gching/wit_ruby]
-
+[![Build Status](https://travis-ci.org/gching/wit_ruby.svg?branch=master)](https://travis-ci.org/gching/wit_ruby)
 [![Gem Version](https://badge.fury.io/rb/wit_ruby.png)](http://badge.fury.io/rb/wit_ruby)
 [![Coverage Status](https://coveralls.io/repos/gching/wit_ruby/badge.png?branch=master)](https://coveralls.io/r/gching/wit_ruby?branch=master)
 
