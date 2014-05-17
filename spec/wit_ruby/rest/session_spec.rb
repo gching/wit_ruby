@@ -185,20 +185,33 @@ describe Wit::REST::Session do
 
 
   describe "Entities" do
-    describe "get list of entities" do
-        let(:get_entities) {session.get_entities}
+    let(:get_entities) {session.get_entities}
+    let(:get_entity) {session.get_entities(get_entities[0])}
 
-        before do
-          VCR.insert_cassette 'get_entities'
-        end
-        after do
-          VCR.eject_cassette
-        end
+    before do
+      VCR.insert_cassette 'get_entities'
+    end
+    after do
+      VCR.eject_cassette
+    end
+
+    describe "get list of entities" do
 
         it "should return an array of used entities as strings" do
           expect(get_entities.class).to eql(Wit::REST::EntityArray)
           expect(get_entities[0].class).to eql(String)
         end
+
+    end
+
+    describe "get specific entity from id" do
+
+
+      it "should return an entity class with same id" do
+        expect(get_entity.class).to eql(Wit::REST::Entity)
+        ## TODO - tell WIT.AI there documentation is wrong as they have name and id switched.
+        expect(get_entity.name).to eql(get_entities[0].split("$")[1])
+      end
 
     end
   end

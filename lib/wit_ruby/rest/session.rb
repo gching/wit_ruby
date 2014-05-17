@@ -67,7 +67,7 @@ module Wit
       ##      - description.
       def get_entities(entity_id = nil)
         ## No specific id, so get list of entities
-        results = entity_id.nil? ? @client.get("/entities") : nil
+        results = entity_id.nil? ? @client.get("/entities") : @client.get("/entities/#{entity_id}")
 
         ## Same concept but wrap it properly if neccessary.
         returnObject = entity_id.nil? ? EntityArray : Entity
