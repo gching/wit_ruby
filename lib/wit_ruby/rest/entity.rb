@@ -32,5 +32,42 @@ module Wit
       end
 
     end
+
+    ## Wrapper for array of entities as strings. Inherits from Results so it can
+    ## be refreshed.
+    class EntityArray < Result
+
+      ## Generates instance variable that holds list of entities as strings in array.
+      ##
+      ## @param resultData [Hash] data from the call.
+      ## @param requestRest [String] rest code for the call.
+      ## @param requestPath [String] request path for the call.
+      ## @param requestBody [Hash] body of the call.
+      ## @return [Wit::REST::MultiIntent] object that holds the array of intents as result objects.
+      def initialize(resultData, requestRest=nil, requestPath=nil, requestBody=nil)
+        ## Pass in empty hash to default to method missing for everything not defined here.
+        super({}, requestRest, requestPath, requestBody)
+        @entities = resultData
+      end
+
+      ## Overide that assists in calling the proper index in the array of entity strings.
+      ##
+      ## @param num [Integer] index of the array of Strings
+      ## @return [Wit::REST::Result] specific entity at the index given.
+      def [](num)
+        @entities[num]
+      end
+
+      ## Assists in going through each entity string in the instance variable.
+      ##
+      ## @return [String] lambda that provides each specific entity id.
+      def each
+        @entities.each do |entity|
+          lambda{entity}
+        end
+      end
+
+    end
+
   end
 end

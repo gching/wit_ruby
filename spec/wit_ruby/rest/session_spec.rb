@@ -34,8 +34,8 @@ describe Wit::REST::Session do
       randSession.should respond_to(:get_intents)
     end
 
-    it ".entities(entity_id = nil)" do
-      randSession.should respond_to(:entities)
+    it "get.entities(entity_id = nil)" do
+      randSession.should respond_to(:get_entities)
     end
 
     it ".create_entity(new_entity)" do
@@ -181,6 +181,26 @@ describe Wit::REST::Session do
       expect(get_intent_id.id).to eql(get_intent_name.id)
     end
 
+  end
+
+
+  describe "Entities" do
+    describe "get list of entities" do
+        let(:get_entities) {session.get_entities}
+
+        before do
+          VCR.insert_cassette 'get_entities'
+        end
+        after do
+          VCR.eject_cassette
+        end
+
+        it "should return an array of used entities as strings" do
+          expect(get_entities.class).to eql(Wit::REST::EntityArray)
+          expect(get_entities[0].class).to eql(String)
+        end
+
+    end
   end
 
 end

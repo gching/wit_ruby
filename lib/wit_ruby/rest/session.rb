@@ -18,7 +18,7 @@ module Wit
       def send_message(message)
         ## Recieve unwrapped results
         results = @client.get("/message?q=#{message}")
-        return Message.new(results.raw_data, results.restCode, results.restPath, results.restBody)
+        return return_with_class(Wit::REST::Message, results)
       end
 
       ## POST - extract meaning from a audio file
@@ -38,7 +38,7 @@ module Wit
       def get_message(message_id)
         results = @client.get("/messages/#{message_id}")
 
-        return Message.new(results.raw_data, results.restCode, results.restPath, results.restBody)
+        return return_with_class(Wit::REST::Message, results)
       end
 
       ## GET - returns either a list of intents if no id is given.
@@ -54,7 +54,7 @@ module Wit
 
         ## Same concept but wrap it around proper object
         returnObject = intent_indicator.nil? ? MultiIntent : Intent
-        return returnObject.new(results.raw_data, results.restCode, results.restPath, results.restBody)
+        return return_with_class(returnObject, results)
 
       end
 
@@ -65,7 +65,14 @@ module Wit
       ##     - returns the specific entity and its parameters with a given id.
       ## TODO - notify Wit.ai to fix their documentations as there is a wrong
       ##      - description.
-      def entities(entity_id = nil)
+      def get_entities(entity_id = nil)
+        ## No specific id, so get list of entities
+        results = entity_id.nil? ? @client.get("/entities") : nil
+
+        ## Same concept but wrap it properly if neccessary.
+        returnObject = entity_id.nil? ? EntityArray : Entity
+
+        return return_with_class(returnObject, results)
 
       end
 
@@ -118,7 +125,7 @@ module Wit
           raise NotRefreshable.new(%(The inputted object with class "#{result.class}" is not refreshable.))
         end
         refreshed_result = @client.request_from_result(result.restCode, result.restPath, result.restBody)
-        return result_class.new(refreshed_result.raw_data, refreshed_result.restCode, refreshed_result.restPath, refreshed_result.restBody)
+        return return_with_class(result_class, refreshed_result)
       end
 
       ## Used to refresh the last response given from the last request.
@@ -128,6 +135,15 @@ module Wit
       def refresh_last
         last_result = @client.last_result
         return @client.request_from_result(last_result.restCode, last_result.restPath, last_result.restBody)
+      end
+
+      private
+      ## Used to return using the given return class and results.
+      ##
+      ## @param return_class return class for the specific method.
+      ## @param results [Wit::REST::Result] holding the specific results from client.
+      def return_with_class(return_class, results)
+        return return_class.new(results.raw_data, results.restCode, results.restPath, results.restBody)
       end
 
     end

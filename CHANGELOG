@@ -1,3 +1,6 @@
+== 0.0.3
+* Implemented getting array of entities from instance (GET).
+
 == 0.0.2
 * Implemented API call to get specific information from a sent message from it's given ID (GET).
 * Intent specific API calls functional (GET).

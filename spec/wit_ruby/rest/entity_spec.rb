@@ -47,3 +47,23 @@ describe Wit::REST::MultiEntity do
   end
 
 end
+
+describe Wit::REST::EntityArray do
+  let(:json_three) {%([
+  "wit$amount_of_money",
+  "wit$contact",
+  "wit$datetime",
+  "wit$on_off",
+  "wit$phrase_to_translate",
+  "wit$temperature"
+  ])}
+  let(:entity_array) {Wit::REST::EntityArray.new(MultiJson.load(json_three))}
+
+
+  it "should be each transversable and be strings" do
+    entity_array.each do |entity_sring|
+      expect(entity_string.class).to eql(String)
+    end
+  end
+
+end
