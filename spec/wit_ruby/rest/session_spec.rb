@@ -43,7 +43,7 @@ describe Wit::REST::Session do
       randSession.should respond_to(:create_entity)
     end
 
-    it ".update_entity(entity_id)" do
+    it ".update_entity(entity_id, update_entity_data)" do
       randSession.should respond_to(:update_entity)
     end
 
@@ -242,7 +242,7 @@ describe Wit::REST::Session do
 
 
     before do
-      VCR.insert_cassette 'post_and_delete_entity', record: :new_episodes
+      VCR.insert_cassette 'post_update_delete_entity', record: :new_episodes
     end
     after do
       VCR.eject_cassette
@@ -256,7 +256,26 @@ describe Wit::REST::Session do
     end
 
     describe "updating entities" do
-    #  let(:resulting_update) {session.update_entity()}
+      let(:json_two) {%({
+        "doc": "A city that I like",
+        "values": [
+          {
+            "value": "Paris",
+            "expressions": ["Paris", "City of Light", "Capital of France"]
+          },
+          {
+              "value": "Seoul",
+              "expressions": ["Seoul", "서울", "Kimchi paradise"],
+              "metadata":"city_343"
+          }
+        ]
+      })}
+      let(:update_body) {Wit::REST::BodyJson.new(MultiJson.load(json_two))}
+      let(:resulting_update) {session.update_entity(resulting_post_name, update_body)}
+
+      it "should return a Result class" do
+        expect(resulting_update.class).to eql(Wit::REST::Result)
+      end
     end
 
     describe "deleting entities" do

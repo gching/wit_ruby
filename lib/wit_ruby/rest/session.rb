@@ -89,8 +89,13 @@ module Wit
         return @client.post("/entities", new_entity.json)
       end
 
-      ## PUT - updates a given entity with the specific entity id.
-      def update_entity(entity_id)
+      ## TODO - notify Wit.ai to return back the updated entity results.
+      ## PUT - updates a given entity with the specific entity id and BodyJson data.
+      ##
+      ## @param entity_id [String] entity id that will be updated.
+      ## @param update_entity_data [Wit::REST::BodyJson] new data that will update the entity.
+      def update_entity(entity_id, update_entity_data)
+        return @client.put("/entities/#{entity_id}", update_entity_data.json)
       end
 
       ## DELETE - deletes the given entity with the entity id.

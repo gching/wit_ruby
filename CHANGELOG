@@ -2,6 +2,7 @@
 * Implemented getting array of entities from instance (GET).
 * Implemented getting a specific entity from its name/id (GET).
 * Implemented creation of entities (POST).
+* Implemented the ability to update entities given the ID (PUT).
 * Implemented deletion of entities (DELETE).
 * Added new class definition for post / put calls assistance. Helps with JSON generation.
 
