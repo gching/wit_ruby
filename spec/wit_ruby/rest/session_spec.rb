@@ -217,7 +217,7 @@ describe Wit::REST::Session do
     end
   end
 
-  describe "posting entities" do
+  describe "posting, deleting, updating entities" do
     let(:json) {%({
       "doc": "A city that I like",
       "id": "#{random_entity_name}",
@@ -228,7 +228,14 @@ describe Wit::REST::Session do
         }
       ]
     })}
+    let(:no_id_hash) {{"doc" => "AMAZING", "values" => [
+      {
+        "value" => "Paris",
+        "expressions" => ["Paris", "City of Light", "Capital of France"]
+      }
+    ] }}
     let(:new_body) {Wit::REST::BodyJson.new(MultiJson.load(json))}
+    let(:no_id_body){Wit::REST::BodyJson.new(no_id_hash)}
     let(:resulting_post) {session.create_entity(new_body)}
     let(:resulting_post_name) {resulting_post.name}
     let(:resulting_post_id) {resulting_post.id}
@@ -240,8 +247,16 @@ describe Wit::REST::Session do
     after do
       VCR.eject_cassette
     end
+    it "should raise error when the BodyJson does not have an ID parameter" do
+      expect{session.create_entity(no_id_body)}.to raise_error(Wit::REST::NotCorrectSchema)
+    end
+
     it "should pass and return Result" do
       expect(resulting_post.class).to eql(Wit::REST::Result)
+    end
+
+    describe "updating entities" do
+    #  let(:resulting_update) {session.update_entity()}
     end
 
     describe "deleting entities" do

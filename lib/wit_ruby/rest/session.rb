@@ -83,6 +83,9 @@ module Wit
       ## @param new_entity [Wit::REST::BodyJson] object with data to be sent over to API.
       ## @return [Wit::REST::Result] results of the posting of the new entity.
       def create_entity(new_entity)
+        if new_entity.id.nil?
+          raise NotCorrectSchema.new("The current BodyJson object passed in does not have an \"id\" defined.")
+        end
         return @client.post("/entities", new_entity.json)
       end
 
@@ -158,5 +161,6 @@ module Wit
     end
 
     class NotRefreshable < Exception; end
+    class NotCorrectSchema < Exception; end
   end
 end
