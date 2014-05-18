@@ -91,7 +91,10 @@ module Wit
       end
 
       ## DELETE - deletes the given entity with the entity id.
+      ##
+      ## @param entity_id [String] entity id that is going to be deleted.
       def delete_entity(entity_id)
+        return @client.delete("/entities/#{entity_id}")
       end
 
       ## POST - adds the possible value into the list of values for the given

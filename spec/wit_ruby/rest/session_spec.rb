@@ -10,6 +10,7 @@ describe Wit::REST::Session do
   let(:rand_hash) {{"a" => "a", "b" => "b"}}
   let(:randSession) {Wit::REST::Session.new(randClient)}
   let(:session) {Wit::REST::Client.new.session}
+  random_entity_name = (0...10).map { ('a'..'z').to_a[rand(26)] }.join
 
 
   ## Testing for method response
@@ -219,7 +220,7 @@ describe Wit::REST::Session do
   describe "posting entities" do
     let(:json) {%({
       "doc": "A city that I like",
-      "id": "favorite_city",
+      "id": "#{random_entity_name}",
       "values": [
         {
           "value": "Paris",
@@ -229,19 +230,32 @@ describe Wit::REST::Session do
     })}
     let(:new_body) {Wit::REST::BodyJson.new(MultiJson.load(json))}
     let(:resulting_post) {session.create_entity(new_body)}
+    let(:resulting_post_name) {resulting_post.name}
+    let(:resulting_post_id) {resulting_post.id}
+
 
     before do
-      VCR.insert_cassette 'post_entity'
+      VCR.insert_cassette 'post_and_delete_entity', record: :new_episodes
     end
     after do
       VCR.eject_cassette
     end
-    it "should pass and return Result with correct id" do
+    it "should pass and return Result" do
       expect(resulting_post.class).to eql(Wit::REST::Result)
-      expect(resulting_post.name).to eql("favorite_city")
+    end
+
+    describe "deleting entities" do
+      let(:resulting_delete) {session.delete_entity(resulting_post_name)}
+
+      it "should pass and return Result with the same deleted id" do
+        expect(resulting_delete.class).to eql(Wit::REST::Result)
+        expect(resulting_delete.deleted).to eql(resulting_post_id)
+      end
+
     end
 
   end
+
 
 
 end
