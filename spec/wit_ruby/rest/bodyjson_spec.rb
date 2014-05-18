@@ -25,7 +25,13 @@ describe Wit::REST::BodyJson do
     ]
   }
   )}
+  let(:eql_hash) {{"doc"=> doc,
+   "id" => id,
+   "values"=>
+    [{"value"=> value_1,
+      "expressions"=>[express_1]}, {"value" => value_2, "expressions" => [express_2]}]}}
   let(:new_body) {Wit::REST::BodyJson.new}
+  let(:new_body_with_value) {Wit::REST::BodyJson.new({"values" => "a"})}
 
   before do
     new_body.id = id
@@ -46,6 +52,14 @@ describe Wit::REST::BodyJson do
 
   it "should be able to generate JSON" do
     expect(new_body.json).to eql(MultiJson.dump(MultiJson.load(json)))
+  end
+
+  it "should be able to generate a hash with no symbols" do
+    expect(new_body.to_h).to eql(eql_hash)
+  end
+
+  it "should be able to remove values from the initial hash if given and be put in instance" do
+    expect(new_body_with_value.instance_variable_get("@values")).to eql("a")
   end
 
 end

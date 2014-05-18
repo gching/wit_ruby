@@ -64,9 +64,15 @@ module Wit
         method_rest_class = Net::HTTP.const_get rest_method.to_s.capitalize
 
         ## Define the actual method for Wit::Session:Client
-        define_method rest_method do |path|#|path, params|
+        define_method rest_method do |path, params=nil|
           request = method_rest_class.new path, {"Authorization" => "Bearer #{@auth_token}"}
-          #request.set_form_data(params)#params if [:post, :put].include?(rest_method)
+          ## If post or put, set content-type to be JSON
+          if [:post, :put].include?(rest_method)
+            request.body = params
+            #"{\"doc\":\"Lets try this on for size\",\"id\":\"try_this\",\"values\":[{\"value\":\"Paris\",\"expressions\":[\"Paris\",\"City of Light\",\"Capital of France\"]}]}"
+            request["Content-Type"] = "application/json"
+            request["Accept"] = "application/vnd.wit.20160202+json"
+          end
           return connect_send(request)
         end
       end
@@ -132,12 +138,13 @@ module Wit
         begin
           ## Save last response and depending on the response, return back the
           ## given body as a hash.
+          #binding.pry if request.method == "POST"
           response = @conn.request request
           @last_response = response
           case response.code
             when "200" then save_result_and_return(request, response)
             when "401" then raise Unauthorized, "Incorrect token or not set. Set ENV[\"WIT_AI_TOKEN\"] or pass into the options parameter as :token"
-            else raise BadResponse, "response code: #{response.code}"
+            else raise BadResponse, "response code: #{response.code} #{response.body}"
           end
 
         end

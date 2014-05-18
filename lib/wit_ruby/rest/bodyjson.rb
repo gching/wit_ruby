@@ -14,8 +14,17 @@ module Wit
       ## @param possible_hash [Hash] used for OpenStruct if necessary
       def initialize(possible_hash=nil)
         ## Initialize instance variable for values
-        @values = Array.new
-        super
+        if( !possible_hash.nil? && possible_hash.has_key?("values") )
+          @values = possible_hash["values"]
+          ## Delete values from it and pass it to OpenStruct constructor
+          new_hash = possible_hash.clone
+          deleted_value = new_hash.delete("values")
+          new_hash_to_os = new_hash
+        else
+          @values = Array.new
+          new_hash_to_os = possible_hash
+        end
+        super(new_hash_to_os)
       end
 
       ## Used to add value for an entity
@@ -63,13 +72,30 @@ module Wit
 
       ## Used to convert the current hash to JSON
       ##
+      ## @return [String] JSON string of the hash
       def json
-        ## Get the current hash from OpenStruct
-        current_hash = to_h
-        ## add the values to it.
-        current_hash["values"] = self.values
-        MultiJson.dump(current_hash)
+        ## Use the current to_h method and MultiJson convert it
+        MultiJson.dump(self.to_h)
 
+      end
+
+      ## Used to overide current to_h method for OpenStruct. Returns a hash
+      ## with string equivalent for symbols and adds the current instance variable
+      ## @values to it.
+      ##
+      def to_h
+        ## Use to_h on OpenStruct to get the current hash in the OpenStruct inheritance
+        current_os_hash = super
+        ## Convert symbols to strings
+        converted_hash = current_os_hash.reduce({}) do |memo, (k, v)|
+          memo.merge({ k.to_s => v})
+        end
+
+        ## Merge values instance to this converted hash.
+        converted_hash["values"] = self.values
+
+        ## Return it.
+        return converted_hash
       end
 
 

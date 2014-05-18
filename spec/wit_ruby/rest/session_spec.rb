@@ -184,7 +184,7 @@ describe Wit::REST::Session do
   end
 
 
-  describe "Entities" do
+  describe "getting entities" do
     let(:get_entities) {session.get_entities}
     let(:get_entity) {session.get_entities(get_entities[0])}
 
@@ -215,5 +215,33 @@ describe Wit::REST::Session do
 
     end
   end
+
+  describe "posting entities" do
+    let(:json) {%({
+      "doc": "A city that I like",
+      "id": "favorite_city",
+      "values": [
+        {
+          "value": "Paris",
+          "expressions": ["Paris", "City of Light", "Capital of France"]
+        }
+      ]
+    })}
+    let(:new_body) {Wit::REST::BodyJson.new(MultiJson.load(json))}
+    let(:resulting_post) {session.create_entity(new_body)}
+
+    before do
+      VCR.insert_cassette 'post_entity'
+    end
+    after do
+      VCR.eject_cassette
+    end
+    it "should pass and return Result with correct id" do
+      expect(resulting_post.class).to eql(Wit::REST::Result)
+      expect(resulting_post.name).to eql("favorite_city")
+    end
+
+  end
+
 
 end

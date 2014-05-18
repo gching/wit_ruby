@@ -65,6 +65,8 @@ module Wit
       ##     - returns the specific entity and its parameters with a given id.
       ## TODO - notify Wit.ai to fix their documentations as there is a wrong
       ##      - description.
+      ## @param entity_id [String] entity id for specific retrieval
+      ## @return [Wit::REST::EntityArray] [Wit::REST::Entity] results and returned in either wrapper
       def get_entities(entity_id = nil)
         ## No specific id, so get list of entities
         results = entity_id.nil? ? @client.get("/entities") : @client.get("/entities/#{entity_id}")
@@ -77,7 +79,11 @@ module Wit
       end
 
       ## POST - creates a new entity with the given attributes.
+      ##
+      ## @param new_entity [Wit::REST::BodyJson] object with data to be sent over to API.
+      ## @return [Wit::REST::Result] results of the posting of the new entity.
       def create_entity(new_entity)
+        return @client.post("/entities", new_entity.json)
       end
 
       ## PUT - updates a given entity with the specific entity id.

@@ -1,6 +1,7 @@
 == 0.0.3
 * Implemented getting array of entities from instance (GET).
 * Implemented getting a specific entity from its name/id (GET).
+* Implemented creation of entities (POST).
 * Added new class definition for post / put calls assistance. Helps with JSON generation.
 
 == 0.0.2
