@@ -1,6 +1,7 @@
 require 'net/http'
 require 'net/https'
 require 'multi_json'
+require 'ostruct'
 
 require "wit_ruby/version"
 require "wit_ruby/rest/client"
