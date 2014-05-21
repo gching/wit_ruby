@@ -91,7 +91,9 @@ module Wit
       ## @return [Hash] converted hash of the given BodyJson
       def to_h
         ## Use to_h on OpenStruct to get the current hash in the OpenStruct inheritance
-        current_os_hash = super
+        ## Depending on version of ruby, to_h might not be supported, so instead use table method
+        ## to get the table instance variable
+        current_os_hash = self.table
         ## Convert symbols to strings
         converted_hash = current_os_hash.reduce({}) do |memo, (k, v)|
           memo.merge({ k.to_s => v})
