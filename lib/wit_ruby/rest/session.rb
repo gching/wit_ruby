@@ -126,12 +126,9 @@ module Wit
       ## POST - adds a new expression to the value of the entity.
       ##
       ## @param new_expression_with_id_and_value [Wit::REST::BodyJson] includes new expression for said ID and value.
-      def add_expression(new_expression_with_id_and_value)
-        ## Rename it for better reading
-        new_express = new_expression_with_id_and_value
-        ## Get the value that will had the expression inserted
-        value = new_express.values[0]["value"]
-        return @client.post("/entities/#{new_express.id}/values/#{value}/expressions", new_express.one_expression_to_json(value))
+      def add_expression(entity_id, value, expression)
+        expression_json = %({"expression":"#{expression}"})
+        return @client.post("/entities/#{entity_id}/values/#{value}/expressions", expression_json)
       end
 
       ## DELETE - deleetes the expression in the value of the entity.

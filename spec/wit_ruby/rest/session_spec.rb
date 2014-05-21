@@ -341,7 +341,7 @@ describe Wit::REST::Session do
       entity_creation = session.create_entity(entity_body)
       @entity_value_expression_name = entity_creation.name
       session.add_value(Wit::REST::BodyJson.new(id: @entity_value_expression_name).add_value(@entity_value_expression_name))
-      @expression_creation = session.add_expression(Wit::REST::BodyJson.new(id:        @entity_value_expression_name).add_value(@entity_value_expression_name).add_expression(@entity_value_expression_name, @entity_value_expression_name))
+      @expression_creation = session.add_expression(@entity_value_expression_name, @entity_value_expression_name, @entity_value_expression_name)
       @expression_deletion = session.delete_expression(@entity_value_expression_name, @entity_value_expression_name, @entity_value_expression_name)
     end
     after :each do
