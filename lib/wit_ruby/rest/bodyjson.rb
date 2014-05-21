@@ -27,10 +27,12 @@ module Wit
         super(new_hash_to_os)
       end
 
+      ## TODO - include metadata
       ## Used to add value for an entity
       ##
       ## @param value [String] a possible value
       ## @param args [Array] posible expressions for the given value
+      ## @return [Wit::REST::BodyJson] the current BodyJson with new value.
       def add_value(value, *args)
         ## Check to see if the value already exists
         @values.each do |value_hash|
@@ -42,6 +44,7 @@ module Wit
         @values << {"value" => value,
                     "expressions" => args
                    }
+        return self
       end
 
       ## Used to add an expression given a value.
@@ -83,6 +86,7 @@ module Wit
       ## with string equivalent for symbols and adds the current instance variable
       ## @values to it.
       ##
+      ## @return [Hash] converted hash of the given BodyJson
       def to_h
         ## Use to_h on OpenStruct to get the current hash in the OpenStruct inheritance
         current_os_hash = super
@@ -96,6 +100,14 @@ module Wit
 
         ## Return it.
         return converted_hash
+      end
+
+      ## Used to properly convert the value in instance to JSON specifically for value calls.
+      ##
+      ## @return [String] JSON string of the one hash value.
+      def one_value_to_json
+        ## Array of one hash, and convert it to JSON
+        MultiJson.dump(@values[0])
       end
 
 

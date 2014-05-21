@@ -4,6 +4,8 @@
 * Implemented creation of entities (POST).
 * Implemented the ability to update entities given the ID (PUT).
 * Implemented deletion of entities (DELETE).
+* Implemented addition of values (POST).
+* Implemented deletion of values (DELETE).
 * Added new class definition for post / put calls assistance. Helps with JSON generation.
 
 == 0.0.2

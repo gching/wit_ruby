@@ -107,14 +107,20 @@ module Wit
 
       ## POST - adds the possible value into the list of values for the given
       ##      - entity with the id.
-      def add_value(entity_id, new_value)
-
+      ##
+      ## @param entity_name [String] name of entity that will have new value inserted
+      ## @param new_value [Wit::REST::BodyJson] includes the new value.
+      ## TODO - restrict to only one value in BodyJson
+      def add_value(entity_name ,new_value)
+        return @client.post("/entities/#{entity_name}/values",  new_value.one_value_to_json)
       end
 
       ## DELETE - deletes the value from the list of values in the entity with
       ##        - with the given value.
-      def delete_value(entity_id, delete_value)
-
+      ## @param entity_name [String] name of entity that will have value deleted
+      ## @param delete_value [String] name of value to be deleted
+      def delete_value(entity_name, delete_value)
+        return @client.delete("/entities/#{entity_name}/values/#{delete_value}")
       end
 
       ## POST - adds a new expression to the value of the entity.

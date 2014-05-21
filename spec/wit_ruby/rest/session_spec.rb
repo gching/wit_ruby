@@ -10,7 +10,7 @@ describe Wit::REST::Session do
   let(:rand_hash) {{"a" => "a", "b" => "b"}}
   let(:randSession) {Wit::REST::Session.new(randClient)}
   let(:session) {Wit::REST::Client.new.session}
-  random_entity_name = (0...10).map { ('a'..'z').to_a[rand(26)] }.join
+  random_name = (0...10).map { ('a'..'z').to_a[rand(26)] }.join
 
 
   ## Testing for method response
@@ -51,7 +51,7 @@ describe Wit::REST::Session do
       randSession.should respond_to(:delete_entity)
     end
 
-    it ".add_value(entity_id, new_value)" do
+    it ".add_value(entity_name, new_value)" do
       randSession.should respond_to(:add_value)
     end
 
@@ -220,7 +220,7 @@ describe Wit::REST::Session do
   describe "posting, deleting, updating entities" do
     let(:json) {%({
       "doc": "A city that I like",
-      "id": "#{random_entity_name}",
+      "id": "#{random_name}",
       "values": [
         {
           "value": "Paris",
@@ -288,6 +288,49 @@ describe Wit::REST::Session do
 
     end
 
+  end
+
+
+  describe "creating and deleting value for an entity" do
+    let(:entity_json) {
+      %({"id": "#{random_name}"})
+    }
+    let(:entity_body) {Wit::REST::BodyJson.new(MultiJson.load(entity_json))}
+    let(:with_value_added_body) {Wit::REST::BodyJson.new.add_value(@resulting_value_name)}
+    #let(:resulting_add_value) {session.add_value(@resulting_entity_name, with_value_added_body)}
+
+
+    before :each do
+      VCR.insert_cassette 'add_delete_value', record: :new_episodes
+      @resulting_entity = session.create_entity(entity_body)
+      @resulting_entity_name = @resulting_entity.name
+      @resulting_value_name = @resulting_entity_name
+      @resulting_add_value = session.add_value(@resulting_entity_name, with_value_added_body)
+      @resulting_delete_value = session.delete_value(@resulting_entity_name, @resulting_value_name)
+    end
+    after :each do
+      session.delete_entity(@resulting_entity_name)
+      VCR.eject_cassette
+    end
+    describe "creation" do
+      it "should return a Result class after creation" do
+        expect(@resulting_add_value.class).to eql(Wit::REST::Result)
+      end
+
+      it "should have the new value inserted" do
+        expect(@resulting_add_value.values[0]["value"]).to eql(@resulting_value_name)
+      end
+    end
+
+    describe "deletion" do
+      it "should return a Result class after deletion" do
+        expect(@resulting_delete_value.class).to eql(Wit::REST::Result)
+      end
+
+      it "should have the value deleted" do
+        expect(@resulting_delete_value.deleted).to eql(@resulting_value_name)
+      end
+    end
   end
 
 

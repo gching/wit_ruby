@@ -32,6 +32,7 @@ describe Wit::REST::BodyJson do
       "expressions"=>[express_1]}, {"value" => value_2, "expressions" => [express_2]}]}}
   let(:new_body) {Wit::REST::BodyJson.new}
   let(:new_body_with_value) {Wit::REST::BodyJson.new({"values" => "a"})}
+  let(:new_body_with_one_value) {Wit::REST::BodyJson.new.add_value(value_1)}
 
   before do
     new_body.id = id
@@ -60,6 +61,11 @@ describe Wit::REST::BodyJson do
 
   it "should be able to remove values from the initial hash if given and be put in instance" do
     expect(new_body_with_value.instance_variable_get("@values")).to eql("a")
+  end
+
+  it "should provide a method to provide JSON for a hash rather than array for a single value" do
+    expect(new_body_with_one_value.one_value_to_json).to eql("{\"value\":\"some random value 1\",\"expressions\":[]}")
+
   end
 
 end
