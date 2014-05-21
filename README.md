@@ -106,7 +106,7 @@ To create and update entities, methods require a Wit::REST::BodyJson object with
     $ session.create_entity(new_entity)
     $ ## Update it with a new doc parameter
     $ new_entity.doc = "some doc"
-    $
+
 TODO
 
 Deleting the entity requires the passing of it's ID
@@ -124,7 +124,9 @@ To create a new value, a Wit::REST::BodyJson object needs to be created with the
 
 To delete, require the passing of the entity id and value name.
 
-    $ session.delete
+    $ session.delete("entity id", "value name")
+
+## Expressions
 
 ## Contributing
 
