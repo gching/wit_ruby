@@ -110,6 +110,7 @@ module Wit
       ##
       ## @param new_value_with_entity [Wit::REST::BodyJson] includes the new value and entity name as ID.
       ## TODO - restrict to only one value in BodyJson
+      ## TODO - notify wit.ai that documentation is off.
       def add_value(new_value_with_entity)
         return @client.post("/entities/#{new_value_with_entity.id}/values",  new_value_with_entity.one_value_to_json)
       end
