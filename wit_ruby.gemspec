@@ -10,7 +10,7 @@ Gem::Specification.new do |spec|
   spec.email         = ["gavinchingy@gmail.com"]
   spec.description   = %q{Provides a Ruby API wrapper with the Wit.ai API.}
   spec.summary       = %q{Provides a Ruby API wrapper with the Wit.ai API.}
-  spec.homepage      = ""
+  spec.homepage      = "https://github.com/gching/wit_ruby"
   spec.license       = "MIT"
 
   spec.files         = `git ls-files`.split($/)
@@ -18,7 +18,7 @@ Gem::Specification.new do |spec|
   spec.test_files    = spec.files.grep(%r{^(test|spec|features)/})
   spec.require_paths = ["lib"]
 
-  spec.required_ruby_version = ">= 1.8.7"
+  spec.required_ruby_version = ">= 1.9.3"
   spec.add_dependency('multi_json', '>= 1.3.0')
 
   spec.add_development_dependency "bundler", "~> 1.3"

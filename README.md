@@ -2,7 +2,9 @@
 
 # WitRuby
 
-Provides a unofficial Ruby API Wrapper for the Wit.ai API. Still implementing most functionalities. Go over to https://rubygems.org/gems/wit_ruby for specific information and documentation.
+Provides a unofficial and (seemingly) pleasant Ruby API Wrapper for the Wit.ai API. As of 0.0.3, most functionalities have been implemented. Go over to https://rubygems.org/gems/wit_ruby for more information.
+
+Documentation that you will definitely need : http://rubydoc.info/gems/wit_ruby/
 
 [![Build Status](https://travis-ci.org/gching/wit_ruby.svg?branch=master)](https://travis-ci.org/gching/wit_ruby)
 [![Gem Version](https://badge.fury.io/rb/wit_ruby.png)](http://badge.fury.io/rb/wit_ruby)
@@ -39,38 +41,90 @@ The client provides also a session for you to mainly do API calls. I suggest you
 
     $ session = client.session
 
-As of 0.0.2, only sending a message, getting message information and intent specific calls are implemented.
+## Result
+
+Every method returns a class wrapper corresponding specifically to the results pertaining to it. The superclass that is inherited (Wit::REST::Result) allows for you to easily access the results of the API call. The results is converted to a hash and is saved in this result class.
+You can call methods on it and if it matches the result's hash, it will return it's value. For example,
+
+    $ ## results.hash = {"a" => "b"}
+    $ results.a
+    $ = "b"
+
+Every direct result returned from each method call defined from the session will be refreshable.
+
+## JSON Specific Calls
+
+Methods that require JSON for the API calls will be generated through use of the class Wit::REST::BodyJson.
+BodyJson inherits from OpenStruct and will assist in providing properly formatted JSON for the methods.
+
+Depending on the data needed, certain methods are provided. For example:
+
+    $ ## First instantiate.
+    $ new_body = Wit::REST::BodyJson.new
+    $ ## Adding an ID and doc parameter
+    $ new_body.id = "Some ID"
+    $ new_body.doc = "Some doc"
+    $ ## Adding value and expression.
+    $ new_body.add_value("Some value", "possible expressions that--", "--that can be added to this value")
+    $ new_body.add_expression("Some existing value", "possible expressions that--", "--that can be added to this value")
+
 
 ## Message
 
 To send a specific message, use the saved session to send a given string as a parameter.
 
-    $ results = session.send_message("Your Message")
+    $ session.send_message("Your Message")
 
 To get a specific messages information from the wit.ai, pass in the message's ID and use the method below.
 
-    $ results = session.get_message("Message ID")
+    $ session.get_message("Message ID")
 
 ## Intent
 
 To get a list of intents in the specific instance over at wit.ai.
 
-    $ ## Array of all intents used.
-    $ results = session.get_intents
+    $ session.get_intents
 
 To get a specific intent information, pass in it's ID or name.
 
-    $ ## Specific intent information.
-    $ results = session.get_intents("Intent ID or Name")
+    $ session.get_intents("Intent ID or Name")
 
-## Result
+## Entities
 
-Every method returns a class wrapper corresponding specifically to that result. The superclass that is inherited (Wit::REST::Result) allows for you to easily access the results of the API call. The results is converted to a hash and is saved in this result class.
-You can call methods on it and if it matches the result's hash, it will return it's value. For example,
+To get a list of entities for this instance.
 
-    $ ## results.hash = {"a" => "b"}
-    $ results.a
-    $  => "b"
+    $ session.get_entities
+
+To get a specific entity, pass it in's ID
+
+    $ session.get_entities("Entity ID")
+
+To create and update entities, methods require a Wit::REST::BodyJson object with an id defined and optional doc, values and expressions defined.
+
+    $ ## New entity
+    $ new_entity = Wit::REST::BodyJson.new(id: "some id")
+    $ session.create_entity(new_entity)
+    $ ## Update it with a new doc parameter
+    $ new_entity.doc = "some doc"
+    $
+TODO
+
+Deleting the entity requires the passing of it's ID
+
+    $ session.delete_entity("some entity id")
+
+
+## Values
+
+To create a new value, a Wit::REST::BodyJson object needs to be created with the ID of the entity and new value.
+
+    $ value_create = Wit::REST::BodyJson.new(id: "entity for new value")
+    $ value_create.add_value("some new value")
+    $ session.add_value(value_create)
+
+To delete, require the passing of the entity id and value name.
+
+    $ session.delete
 
 ## Contributing
 
