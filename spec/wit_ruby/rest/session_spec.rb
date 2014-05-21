@@ -296,7 +296,6 @@ describe Wit::REST::Session do
       %({"id": "#{random_name}"})
     }
     let(:entity_body) {Wit::REST::BodyJson.new(MultiJson.load(entity_json))}
-    let(:with_value_added_body) {Wit::REST::BodyJson.new.add_value(@resulting_value_name)}
     #let(:resulting_add_value) {session.add_value(@resulting_entity_name, with_value_added_body)}
 
 
@@ -305,7 +304,9 @@ describe Wit::REST::Session do
       @resulting_entity = session.create_entity(entity_body)
       @resulting_entity_name = @resulting_entity.name
       @resulting_value_name = @resulting_entity_name
-      @resulting_add_value = session.add_value(@resulting_entity_name, with_value_added_body)
+      @body_for_value_insert = Wit::REST::BodyJson.new(id: @resulting_entity_name)
+      @body_with_id_and_value = @body_for_value_insert.add_value(@resulting_value_name)
+      @resulting_add_value = session.add_value(@body_with_id_and_value)
       @resulting_delete_value = session.delete_value(@resulting_entity_name, @resulting_value_name)
     end
     after :each do
