@@ -134,7 +134,8 @@ module Wit
         return @client.post("/entities/#{new_express.id}/values/#{value}/expressions", new_express.one_expression_to_json(value))
       end
 
-      ## DELETE - deleetes the expression in the value of the entity.
+      ## DELETE - deletes the expression in the value of the entity.
+      ##
       def delete_expression(entity_id, value, expression)
         return @client.delete("/entities/#{entity_id}/values/#{value}/expressions/#{expression}")
       end
