@@ -51,6 +51,7 @@ module Wit
       ##
       ## @param value [String] value that will have a new expression
       ## @param args [Array] new expressions for the value
+      ## @return [Wit::REST::BodyJson] returns self with added expression to value
       def add_expression(value, *args)
         ## Look for it, and insert new expressions if found.
         ## If not found, raise error
@@ -61,8 +62,9 @@ module Wit
           else ## Not found and raise error
             raise NotFound.new(%(The value, "#{value}", cannot be found.))
           end
-
         end
+
+        return self
       end
 
       ## Overide values to instead go into OpenStruct to work directly on the instance.
@@ -108,6 +110,19 @@ module Wit
       def one_value_to_json
         ## Array of one hash, and convert it to JSON
         MultiJson.dump(@values[0])
+      end
+
+      ## Used to properly convert the first expression of the given value to JSON.
+      ##
+      ## @return [String] JSOn string of the expression.
+      def one_expression_to_json(value_add)
+        @values.each do |value|
+          if value["value"] == value_add
+            ## Generate new hash with the given first expression and dump it.
+            expression_hash = {"expression" => value["expressions"][0]}
+            return MultiJson.dump(expression_hash)
+          end
+        end
       end
 
 

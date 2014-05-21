@@ -6,6 +6,8 @@
 * Implemented deletion of entities (DELETE).
 * Implemented addition of values (POST).
 * Implemented deletion of values (DELETE).
+* Implemented addition of expressions (POST).
+* Implemented deletion of expressions (DELETE).
 * Added new class definition for post / put calls assistance. Helps with JSON generation.
 
 == 0.0.2

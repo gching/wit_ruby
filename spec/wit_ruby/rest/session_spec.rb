@@ -59,7 +59,7 @@ describe Wit::REST::Session do
       randSession.should respond_to(:delete_value)
     end
 
-    it ".add_expression(entity_id, value, new_expression)" do
+    it ".add_expression(new_expression_with_id_and_value)" do
       randSession.should respond_to(:add_expression)
     end
 
@@ -334,6 +334,41 @@ describe Wit::REST::Session do
     end
   end
 
+  describe "creating and deleting expression from a value" do
+    let(:entity_body) {Wit::REST::BodyJson.new(id: random_name)}
+    before :each do
+      VCR.insert_cassette 'add_delete_expression', record: :new_episodes
+      entity_creation = session.create_entity(entity_body)
+      @entity_value_expression_name = entity_creation.name
+      session.add_value(Wit::REST::BodyJson.new(id: @entity_value_expression_name).add_value(@entity_value_expression_name))
+      @expression_creation = session.add_expression(Wit::REST::BodyJson.new(id:        @entity_value_expression_name).add_value(@entity_value_expression_name).add_expression(@entity_value_expression_name, @entity_value_expression_name))
+      @expression_deletion = session.delete_expression(@entity_value_expression_name, @entity_value_expression_name, @entity_value_expression_name)
+    end
+    after :each do
+      session.delete_value(@entity_value_expression_name, @entity_value_expression_name)
+      session.delete_entity(@entity_value_expression_name)
+      VCR.eject_cassette
+    end
+
+    describe "addition" do
+      it "should return a Result class" do
+        expect(@expression_creation.class).to eql(Wit::REST::Result)
+      end
+      it "should have the expression added" do
+        expect(@expression_creation.values[0]["expressions"][0]).to eql(@entity_value_expression_name)
+      end
+    end
+
+    describe "deletion" do
+      it "should return a Result class" do
+        expect(@expression_deletion.class).to eql(Wit::REST::Result)
+      end
+      it "should have deleted as the expression name" do
+        expect(@expression_deletion.deleted).to eql(@entity_value_expression_name)
+      end
+    end
+
+  end
 
 
 end

@@ -33,6 +33,7 @@ describe Wit::REST::BodyJson do
   let(:new_body) {Wit::REST::BodyJson.new}
   let(:new_body_with_value) {Wit::REST::BodyJson.new({"values" => "a"})}
   let(:new_body_with_one_value) {Wit::REST::BodyJson.new.add_value(value_1)}
+  let(:new_body_with_one_expression) {new_body_with_one_value.add_expression(value_1, express_1)}
 
   before do
     new_body.id = id
@@ -65,7 +66,10 @@ describe Wit::REST::BodyJson do
 
   it "should provide a method to provide JSON for a hash rather than array for a single value" do
     expect(new_body_with_one_value.one_value_to_json).to eql("{\"value\":\"some random value 1\",\"expressions\":[]}")
+  end
 
+  it "should provide a method to provide JSON for the first expression of a given value" do
+    expect(new_body_with_one_expression.one_expression_to_json(value_1)).to eql(%({"expression":"#{express_1}"}))
   end
 
 end
