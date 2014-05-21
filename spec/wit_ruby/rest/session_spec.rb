@@ -190,7 +190,7 @@ describe Wit::REST::Session do
     let(:get_entity) {session.get_entities(get_entities[0])}
 
     before do
-      VCR.insert_cassette 'get_entities'
+      VCR.insert_cassette 'get_entities', record: :new_episodes
     end
     after do
       VCR.eject_cassette
@@ -265,7 +265,7 @@ describe Wit::REST::Session do
           },
           {
               "value": "Seoul",
-              "expressions": ["Seoul", "서울", "Kimchi paradise"],
+              "expressions": ["Seoul", "Kimchi paradise"],
               "metadata":"city_343"
           }
         ]
