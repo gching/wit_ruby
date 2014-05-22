@@ -41,7 +41,9 @@ The client provides also a session for you to mainly do API calls. I suggest you
 
     $ session = client.session
 
-## Result
+Please again, do look over documentation to see the full scope of usage and configuration.
+
+=== Result
 
 Every method returns a class wrapper corresponding specifically to the results pertaining to it. The superclass that is inherited (Wit::REST::Result) allows for you to easily access the results of the API call. The results is converted to a hash and is saved in this result class.
 You can call methods on it and if it matches the result's hash, it will return it's value. For example,
@@ -52,7 +54,7 @@ You can call methods on it and if it matches the result's hash, it will return i
 
 Every direct result returned from each method call defined from the session will be refreshable.
 
-## JSON Specific Calls
+=== JSON Specific Calls
 
 Methods that require JSON for the API calls will be generated through use of the class Wit::REST::BodyJson.
 BodyJson inherits from OpenStruct and will assist in providing properly formatted JSON for the methods.
@@ -69,7 +71,7 @@ Depending on the data needed, certain methods are provided. For example:
     $ new_body.add_expression("Some existing value", "possible expressions that--", "--that can be added to this value")
 
 
-## Message
+=== Message
 
 To send a specific message, use the saved session to send a given string as a parameter.
 
@@ -79,7 +81,7 @@ To get a specific messages information from the wit.ai, pass in the message's ID
 
     $ session.get_message("Message ID")
 
-## Intent
+=== Intent
 
 To get a list of intents in the specific instance over at wit.ai.
 
@@ -89,7 +91,7 @@ To get a specific intent information, pass in it's ID or name.
 
     $ session.get_intents("Intent ID or Name")
 
-## Entities
+=== Entities
 
 To get a list of entities for this instance.
 
@@ -112,7 +114,7 @@ Deleting the entity requires the passing of it's ID
     $ session.delete_entity("some entity id")
 
 
-## Values
+=== Values
 
 To create a new value, a Wit::REST::BodyJson object needs to be created with the ID of the entity and new value.
 
@@ -124,7 +126,7 @@ To delete, require the passing of the entity id and value name.
 
     $ session.delete_value("entity id", "value name")
 
-## Expressions
+=== Expressions
 
 Add an expression by passing in the entity's id, value name, and the new expression.
 
