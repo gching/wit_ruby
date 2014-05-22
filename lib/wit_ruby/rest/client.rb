@@ -69,7 +69,6 @@ module Wit
           ## If post or put, set content-type to be JSON
           if [:post, :put].include?(rest_method)
             request.body = params
-            #"{\"doc\":\"Lets try this on for size\",\"id\":\"try_this\",\"values\":[{\"value\":\"Paris\",\"expressions\":[\"Paris\",\"City of Light\",\"Capital of France\"]}]}"
             request["Content-Type"] = "application/json"
             request["Accept"] = "application/vnd.wit.20160202+json"
           end
@@ -94,12 +93,14 @@ module Wit
       private
 
       ## Setup the session that allows for calling of each method.
+      ##
       def setup_session
         @session = Wit::REST::Session.new(self)
       end
 
       ## Used to setup a connection using Net::HTTP object when making requests
       ## to the API.
+      ##
       def setup_conn
 
         ## Setup connection through the @conn instance variable and proxy if
@@ -115,6 +116,7 @@ module Wit
       end
 
       ## Setup SSL for the given connection in @conn.
+      ##
       def setup_ssl
         @conn.use_ssl = @params[:use_ssl]
         if @params[:ssl_verify_peer]
@@ -166,6 +168,8 @@ module Wit
 
     end
 
+    ## Raised when response code is not 200 or 401.
+    ##
     class BadResponse < Exception; end
   end
 end

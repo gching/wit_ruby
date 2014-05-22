@@ -94,6 +94,7 @@ module Wit
       ##
       ## @param entity_id [String] entity id that will be updated.
       ## @param update_entity_data [Wit::REST::BodyJson] new data that will update the entity.
+      ## @return [Wit::REST::Result] results of updating the entity
       def update_entity(entity_id, update_entity_data)
         return @client.put("/entities/#{entity_id}", update_entity_data.json)
       end
@@ -101,16 +102,18 @@ module Wit
       ## DELETE - deletes the given entity with the entity id.
       ##
       ## @param entity_id [String] entity id that is going to be deleted.
+      ## @return [Wit::REST::Result] results of the deletion of the entity
       def delete_entity(entity_id)
         return @client.delete("/entities/#{entity_id}")
       end
 
       ## POST - adds the possible value into the list of values for the given
       ##      - entity with the id.
-      ##
-      ## @param new_value_with_entity [Wit::REST::BodyJson] includes the new value and entity name as ID.
       ## TODO - restrict to only one value in BodyJson
       ## TODO - notify wit.ai that documentation is off.
+      ##
+      ## @param new_value_with_entity [Wit::REST::BodyJson] includes the new value and entity name as ID.
+      ## @return [Wit::REST::Result] the results of the addition of the value
       def add_value(new_value_with_entity)
         return @client.post("/entities/#{new_value_with_entity.id}/values",  new_value_with_entity.one_value_to_json)
       end
@@ -119,6 +122,7 @@ module Wit
       ##        - with the given value.
       ## @param entity_name [String] name of entity that will have value deleted
       ## @param delete_value [String] name of value to be deleted
+      ## @return [Wit::REST::Result] results of the deletion of the value.
       def delete_value(entity_name, delete_value)
         return @client.delete("/entities/#{entity_name}/values/#{delete_value}")
       end
@@ -126,6 +130,7 @@ module Wit
       ## POST - adds a new expression to the value of the entity.
       ##
       ## @param new_expression_with_id_and_value [Wit::REST::BodyJson] includes new expression for said ID and value.
+      ## @return [Wit::REST::Result] results of the addition of the expression
       def add_expression(new_expression_with_id_and_value)
         ## Rename it for better reading
         new_express = new_expression_with_id_and_value
@@ -136,6 +141,10 @@ module Wit
 
       ## DELETE - deletes the expression in the value of the entity.
       ##
+      ## @param entity_id [String] entity id that will have the expression deleted.
+      ## @param value [String] value name that will have the expression deleted.
+      ## @param expression [String] expression that will be deleted.
+      ## @return [Wit::REST::Result] results of the deletion of the given expression.
       def delete_expression(entity_id, value, expression)
         return @client.delete("/entities/#{entity_id}/values/#{value}/expressions/#{expression}")
       end
@@ -178,7 +187,12 @@ module Wit
 
     end
 
+    ## Raised when the given result object cannot be refreshed.
+    ##
     class NotRefreshable < Exception; end
+    
+    ## Raised when the given result object does not have required parameters.
+    ##
     class NotCorrectSchema < Exception; end
   end
 end

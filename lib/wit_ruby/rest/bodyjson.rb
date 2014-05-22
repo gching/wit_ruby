@@ -116,7 +116,7 @@ module Wit
 
       ## Used to properly convert the first expression of the given value to JSON.
       ##
-      ## @return [String] JSOn string of the expression.
+      ## @return [String] JSON string of the expression.
       def one_expression_to_json(value_add)
         @values.each do |value|
           if value["value"] == value_add
