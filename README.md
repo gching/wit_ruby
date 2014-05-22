@@ -5,6 +5,7 @@
 Provides a unofficial and (seemingly) pleasant Ruby API Wrapper for the Wit.ai API. As of 0.0.3, most functionalities have been implemented. Go over to https://rubygems.org/gems/wit_ruby for more information.
 
 Documentation that you will definitely need : http://rubydoc.info/gems/wit_ruby/
+Do also reference the Wit.ai API documentation : https://wit.ai/docs/api
 
 [![Build Status](https://travis-ci.org/gching/wit_ruby.svg?branch=master)](https://travis-ci.org/gching/wit_ruby)
 [![Gem Version](https://badge.fury.io/rb/wit_ruby.png)](http://badge.fury.io/rb/wit_ruby)
@@ -32,9 +33,9 @@ Remember to put this up to access it!
 
 To start using the wrapper, create a client with an authorization token given from Wit.ai. Set this either in ENV["WIT_AI_TOKEN"] or pass it on it the parameters as a hash. Default settings can be overridden by this hash as well.
 
-    $ ## Default to ENV["WIT_AI_TOKEN"]
+    ## Default to ENV["WIT_AI_TOKEN"]
     $ client = Wit::REST::Client.new()
-    $ ## Override token when created
+    ## Override token when created
     $ client = Wit::REST::Client.new(token: "Insert Token Here")
 
 The client provides also a session for you to mainly do API calls. I suggest you save the session somewhere for easy access.
@@ -48,9 +49,9 @@ Please again, do look over documentation to see the full scope of usage and conf
 Every method returns a class wrapper corresponding specifically to the results pertaining to it. The superclass that is inherited (Wit::REST::Result) allows for you to easily access the results of the API call. The results is converted to a hash and is saved in this result class.
 You can call methods on it and if it matches the result's hash, it will return it's value. For example,
 
-    $ ## results.hash = {"a" => "b"}
+    ## results.hash = {"a" => "b"}
     $ results.a
-    $ = "b"
+    ## = "b"
 
 Every direct result returned from each method call defined from the session will be refreshable.
 
@@ -61,12 +62,12 @@ BodyJson inherits from OpenStruct and will assist in providing properly formatte
 
 Depending on the data needed, certain methods are provided. For example:
 
-    $ ## First instantiate.
+    ## First instantiate.
     $ new_body = Wit::REST::BodyJson.new
-    $ ## Adding an ID and doc parameter
+    ## Adding an ID and doc parameter
     $ new_body.id = "Some ID"
     $ new_body.doc = "Some doc"
-    $ ## Adding value and expression.
+    ## Adding value and expression.
     $ new_body.add_value("Some value", "possible expressions that--", "--that can be added to this value")
     $ new_body.add_expression("Some existing value", "possible expressions that--", "--that can be added to this value")
 
@@ -103,10 +104,10 @@ To get a specific entity, pass it in's ID
 
 To create and update entities, methods require a Wit::REST::BodyJson object with an id defined and optional doc, values and expressions defined.
 
-    $ ## New entity
+    ## New entity
     $ new_entity = Wit::REST::BodyJson.new(id: "some id")
     $ session.create_entity(new_entity)
-    $ ## Update it with a new doc parameter
+    ## Update it with a new doc parameter
     $ new_entity.doc = "some doc"
 
 Deleting the entity requires the passing of it's ID
@@ -138,7 +139,9 @@ Same goes for the deletion of an expression.
 
 ## Contributing
 
-I am a beginner developer so do contribute or help as much as possible! I definitely need to learn a lot :).
+I am a beginner developer so do contribute or help as much as possible! I definitely need to learn a lot :). Whoever helps will also have there name put here below this line. Amazing!
+_________________________________
+
 
 1. Fork it
 2. Create your feature branch (`git checkout -b my-new-feature`)
