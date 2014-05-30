@@ -88,6 +88,13 @@ module Wit
         !@requestRest.nil?
       end
 
+      ## Checks to see if the data in the Result object is empty (empty array or hash).
+      ##
+      ## @return [Boolean] indicating if the current object is empty.
+      def empty?
+        @rawdata.empty?
+      end
+
 
 
       private

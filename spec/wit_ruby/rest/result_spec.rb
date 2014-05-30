@@ -9,6 +9,8 @@ describe Wit::REST::Result do
   let(:rest_code) {"post"}
   let(:result) {Wit::REST::Result.new(randHash, rest_code, rand_path, rand_body)}
   let(:not_refresh_result) {Wit::REST::Result.new(randHash)}
+  let(:empty_hash) {Wit::REST::Result.new({})}
+  let(:empty_array) {Wit::REST::Result.new([])}
 
   it "should have an instance of the original hash" do
     expect(result.raw_data).to eql(randHash)
@@ -38,6 +40,12 @@ describe Wit::REST::Result do
   it "should be refereshable if rest parameters and path/body are given and not if it isn't given" do
     expect(result.refreshable?).to be_true
     expect(not_refresh_result.refreshable?).to be_false
+  end
+
+  it "should have an empty method to check if the data is empty and return true if it is" do
+    expect(result.empty?).to be_false
+    expect(empty_hash.empty?).to be_true
+    expect(empty_array.empty?).to be_true
   end
 
 end
