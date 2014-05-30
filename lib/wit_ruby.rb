@@ -12,3 +12,8 @@ require "wit_ruby/rest/intent"
 require "wit_ruby/rest/entity"
 require "wit_ruby/rest/expression"
 require "wit_ruby/rest/bodyjson"
+
+
+## Module that contains everything necessary for this amazing wrapper!
+module Wit
+end

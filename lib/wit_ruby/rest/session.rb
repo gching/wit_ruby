@@ -48,9 +48,7 @@ module Wit
       ## @return [Wit:REST::Intent] [Wit::REST::MultiIntent] results of intent call to API.
       ## @todo Raise error if no intents
       def get_intents(intent_indicator = nil)
-
-
-        ## No spefic id, so get list of intents or specific id, return it as Intent object
+        ## No specific id, so get list of intents or specific id, return it as Intent object
         results = intent_indicator.nil? ? @client.get("/intents") : @client.get("/intents/#{intent_indicator}")
 
         ## Same concept but wrap it around proper object
