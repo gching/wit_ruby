@@ -210,7 +210,7 @@ describe Wit::REST::Session do
 
       it "should return an entity class with same id" do
         expect(get_entity.class).to eql(Wit::REST::Entity)
-        ## TODO - tell WIT.AI there documentation is wrong as they have name and id switched.
+        ## @todo tell WIT.AI there documentation is wrong as they have name and id switched.
         expect(get_entity.name).to eql(get_entities[0].split("$")[1])
       end
 

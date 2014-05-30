@@ -1,6 +1,6 @@
 ## bodyjson.rb
 ## Wrapper for JSON data that will be sent over to API
-## TODO - better seraching for specific hash
+## @todo better seraching for specific hash
 
 module Wit
   module REST
@@ -27,12 +27,13 @@ module Wit
         super(new_hash_to_os)
       end
 
-      ## TODO - include metadata
+
       ## Used to add value for an entity
       ##
       ## @param value [String] a possible value
       ## @param args [Array] posible expressions for the given value
       ## @return [Wit::REST::BodyJson] the current BodyJson with new value.
+      ## @todo include metadata
       def add_value(value, *args)
         ## Check to see if the value already exists
         @values.each do |value_hash|

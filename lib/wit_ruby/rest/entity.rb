@@ -35,7 +35,7 @@ module Wit
 
     ## Wrapper for array of entities as strings. Inherits from Results so it can
     ## be refreshed.
-    ## TODO - Propagate these methods into Result
+    ## @todo Propagate these methods into Result
     class EntityArray < Result
 
       ## Generates instance variable that holds list of entities as strings in array.
