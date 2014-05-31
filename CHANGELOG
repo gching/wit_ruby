@@ -1,3 +1,8 @@
+== 1.0.0
+* Changed to 1.0.0 for the sake of having the first official release, even though it is still backwards compatible.
+* Added error checking to make sure input parameters to the session are correct.
+
+
 == 0.0.3
 * Implemented getting array of entities from instance (GET).
 * Implemented getting a specific entity from its name/id (GET).

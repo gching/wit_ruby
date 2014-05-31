@@ -46,13 +46,10 @@ module Wit
       ##
       ## @param intent_indicator [String] the id or name of the intent
       ## @return [Wit:REST::Intent] [Wit::REST::MultiIntent] results of intent call to API.
-      ## @todo Set test for raising error.
       def get_intents(intent_indicator = nil)
         ## No specific id, so get list of intents or specific id, return it as Intent object
         results = intent_indicator.nil? ? @client.get("/intents") : @client.get("/intents/#{intent_indicator}")
 
-        ## If it is empty, raise an empty error.
-        raise IsEmpty.new("The returned intents / intent is empty.") if results.empty?
         ## Same concept but wrap it around proper object
         returnObject = intent_indicator.nil? ? MultiIntent : Intent
         return return_with_class(returnObject, results)
