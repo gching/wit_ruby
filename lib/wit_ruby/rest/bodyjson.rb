@@ -38,7 +38,7 @@ module Wit
         ## Check to see if the value already exists
         @values.each do |value_hash|
           if value_hash["value"] == value
-            raise ValueAlreadyExists.new(%(The current value being inserted, "#{value}", already exists.))
+            raise ValueAlreadyExists.new("The current value being inserted, \"#{value}\", already exists.")
           end
         end
         ## Adds it if it isn't there with the given expressions
@@ -61,7 +61,7 @@ module Wit
             ## Set union for arrays, removes duplicates
             value_hash["expressions"] = value_hash["expressions"] | args
           else ## Not found and raise error
-            raise NotFound.new(%(The value, "#{value}", cannot be found.))
+            raise NotFound.new("The value, \"#{value}\", cannot be found.")
           end
         end
 

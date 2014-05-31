@@ -82,6 +82,8 @@ module Wit
       ## @param new_entity [Wit::REST::BodyJson] object with data to be sent over to API.
       ## @return [Wit::REST::Result] results of the posting of the new entity.
       def create_entity(new_entity)
+
+        ## Checks to make sure it has an id, if not, raise error.
         if new_entity.id.nil?
           raise NotCorrectSchema.new("The current BodyJson object passed in does not have an \"id\" defined.")
         end
@@ -115,6 +117,10 @@ module Wit
       ## @todo restrict to only one value in BodyJson
       ## @todo notify wit.ai that documentation is off.
       def add_value(new_value_with_entity)
+        ## Makes sure values exist and has a value and id as well.
+        if new_value_with_entity.id.nil? || new_value_with_entity.one_value_to_json == "null"
+          raise NotCorrectSchema.new("The current BodyJson object passed in does not have either an \"id\" or a \"value\" defined.")
+        end
         return @client.post("/entities/#{new_value_with_entity.id}/values",  new_value_with_entity.one_value_to_json)
       end
 
@@ -131,10 +137,9 @@ module Wit
       ##
       ## @param new_expression_with_id_and_value [Wit::REST::BodyJson] includes new expression for said ID and value.
       ## @return [Wit::REST::Result] results of the addition of the expression
-      def add_expression(new_expression_with_id_and_value)
-        ## Rename it for better reading
-        new_express = new_expression_with_id_and_value
+      def add_expression(new_express)
         ## Get the value that will had the expression inserted
+        ## If it does not exist, raise an error
         value = new_express.values[0]["value"]
         return @client.post("/entities/#{new_express.id}/values/#{value}/expressions", new_express.one_expression_to_json(value))
       end

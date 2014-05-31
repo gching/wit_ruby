@@ -308,6 +308,8 @@ describe Wit::REST::Session do
       @body_with_id_and_value = @body_for_value_insert.add_value(@resulting_value_name)
       @resulting_add_value = session.add_value(@body_with_id_and_value)
       @resulting_delete_value = session.delete_value(@resulting_entity_name, @resulting_value_name)
+      @no_id = Wit::REST::BodyJson.new.add_value(@resulting_value_name)
+      @no_value = Wit::REST::BodyJson.new(id: @resulting_entity_name)
     end
     after :each do
       session.delete_entity(@resulting_entity_name)
@@ -320,6 +322,11 @@ describe Wit::REST::Session do
 
       it "should have the new value inserted" do
         expect(@resulting_add_value.values[0]["value"]).to eql(@resulting_value_name)
+      end
+
+      it "should raise an error for an incorrect BodyJson with no id or value " do
+        expect{session.add_value(@no_id)}.to raise_error(Wit::REST::NotCorrectSchema)
+        expect{session.add_value(@no_value)}.to raise_error(Wit::REST::NotCorrectSchema)
       end
     end
 
