@@ -5,6 +5,8 @@
 module Wit
   module REST
     class Session
+      ## Able to read cached result from last call.
+      attr_reader :last_result
       ## Initialize with the given client.
       ##
       ## @param client [Wit::REST::Client] client of the connection
@@ -166,22 +168,23 @@ module Wit
         return return_with_class(result_class, refreshed_result)
       end
 
-      ## Used to refresh the last response given from the last request.
+      ## Used to refresh the last result given from the last request.
       ##
       ## @return [Wit::REST::Result] refreshed result from last result
-      ## @todo fix wrapper
+      ## @todo Make tests
       def refresh_last
-        last_result = @client.last_result
-        return @client.request_from_result(last_result.restCode, last_result.restPath, last_result.restBody)
+        return_with_class(@last_result.class,@client.request_from_result(@last_result.restCode, @last_result.restPath, @last_result.restBody))
       end
 
       private
-      ## Used to return using the given return class and results.
+      ## Used to return using the given return class and results. Also saves the last result.
       ##
       ## @param return_class return class for the specific method.
       ## @param results [Wit::REST::Result] holding the specific results from client.
       def return_with_class(return_class, results)
-        return return_class.new(results.raw_data, results.restCode, results.restPath, results.restBody)
+        ## Save it in instance parameter @last_result for easy access.
+        @last_result = return_class.new(results.raw_data, results.restCode, results.restPath, results.restBody)
+        return @last_result
       end
 
     end

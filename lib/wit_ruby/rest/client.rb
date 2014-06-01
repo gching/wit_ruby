@@ -32,7 +32,7 @@ module Wit
 
       # Allows for the reading of the last request, last response, and the
       # current session.
-      attr_reader :last_req, :last_response, :session, :last_result
+      attr_reader :last_request, :last_response, :session, :last_result
 
       ## Initialize the new instance with either the default parameters or given parameters.
       ## Token can either be given in options or defaults to ENV["WIT_AI_TOKEN"]
@@ -133,7 +133,7 @@ module Wit
       ## @return [Wit::REST::Result] result from request.
       def connect_send(request)
         ## Set the last request parameter
-        @last_req = request
+        @last_request = request
         ## Set the retries if necessary to send again.
         left_retries = @params[:retry_limit]
         ## Start sending request
