@@ -173,7 +173,8 @@ module Wit
       ## @return [Wit::REST::Result] refreshed result from last result
       ## @todo Make tests
       def refresh_last
-        return_with_class(@last_result.class,@client.request_from_result(@last_result.restCode, @last_result.restPath, @last_result.restBody))
+        refreshed_last_result = @client.request_from_result(@last_result.restCode, @last_result.restPath, @last_result.restBody)
+        return_with_class(@last_result.class, refreshed_last_result)
       end
 
       private
