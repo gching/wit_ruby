@@ -5,7 +5,8 @@
 module Wit
   module REST
     class Session
-      ## Able to read cached result from last call.
+      ## Able to read cached result from last request.
+
       attr_reader :last_result
       ## Initialize with the given client.
       ##
@@ -113,7 +114,6 @@ module Wit
       ##
       ## @param new_value_with_entity [Wit::REST::BodyJson] includes the new value and entity name as ID.
       ## @return [Wit::REST::Result] the results of the addition of the value
-      ## @todo restrict to only one value in BodyJson
       ## @todo notify wit.ai that documentation is off.
       def add_value(new_value_with_entity)
         ## Makes sure values exist and has a value and id as well.
@@ -171,7 +171,6 @@ module Wit
       ## Used to refresh the last result given from the last request.
       ##
       ## @return [Wit::REST::Result] refreshed result from last result
-      ## @todo Make tests
       def refresh_last
         refreshed_last_result = @client.request_from_result(@last_result.restCode, @last_result.restPath, @last_result.restBody)
         return_with_class(@last_result.class, refreshed_last_result)
