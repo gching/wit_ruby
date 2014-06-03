@@ -4,7 +4,7 @@
 [![Gem Version](https://badge.fury.io/rb/wit_ruby.png)](http://badge.fury.io/rb/wit_ruby)
 [![Coverage Status](https://coveralls.io/repos/gching/wit_ruby/badge.png?branch=master)](https://coveralls.io/r/gching/wit_ruby?branch=master)
 
-Provides a unofficial and (seemingly) pleasant Ruby API Wrapper for the Wit.ai API. As of 0.0.3, most functionalities have been implemented. Go over to https://rubygems.org/gems/wit_ruby for more information.
+Provides a unofficial and (seemingly) pleasant Ruby API Wrapper for the Wit.ai API. As of 1.0.0, most functionalities have been implemented. Go over to https://rubygems.org/gems/wit_ruby for more information.
 
 Documentation that you will definitely need : http://rubydoc.info/gems/wit_ruby/
 
