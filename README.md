@@ -63,6 +63,13 @@ You can call methods on it and if it matches the result's hash, it will return i
 
 Every direct result returned from each method call defined from the session will be refreshable.
 
+Some unique methods are provided:
+
+```ruby
+results.raw_data # The raw data from the response of the request.
+results.refreshable? # Check to see current object is refreshable.
+```
+
 ### JSON Specific Calls
 
 Methods that require JSON for the API calls will be generated through use of the class Wit::REST::BodyJson.
@@ -90,13 +97,14 @@ To get a specific messages information from the wit.ai, pass in the message's ID
 
     $ session.get_message("Message ID")
 
-#### Message Result Unique Methods
+##### Message Result Unique Methods
 
-    message_results.send_message("Your Message")
-    message_results.confidence # Returns the confidence of the message results.
-    message_results.entity_names # Generates array of names of each entity in this message.
-    message_results.intent # Returns the intent that this message corresponded to.
-
+```ruby
+message_results = session.send_message("Your Message")
+message_results.confidence # Returns the confidence of the message results.
+message_results.entity_names # Generates array of names of each entity in this message.
+message_results.intent # Returns the intent that this message corresponded to.
+```
 
 ### Intent
 
@@ -107,6 +115,25 @@ To get a list of intents in the specific instance over at wit.ai.
 To get a specific intent information, pass in it's ID or name.
 
     $ session.get_intents("Intent ID or Name")
+
+##### Intent Result Unique Methods
+
+If it is a list of intents:
+
+```ruby
+multi_intent = session.get_intents
+multi_intent[0] # Returns each specific index of intent
+multi_intent.each {} # Provides access to each individual intent
+```
+
+If it is only one specific intent:
+
+```ruby
+intent = session.get_intents("Intent ID or Name")
+intent.entities_used # Return entities used with there id as an array of strings.
+intent.expression_bodies # Return the expression bodies as an array of strings.
+intent.expressions # Return the list of expressions as array of expression objects.
+```
 
 ### Entities
 
@@ -130,6 +157,17 @@ Deleting the entity requires the passing of it's ID
 
     $ session.delete_entity("some entity id")
 
+##### Entities Result Unique Methods
+
+For a list of entities:
+
+```ruby
+entities = session.get_entities
+entities[0] # Index to access each string for the entity name.
+entities.each {} # Go through each entity string.
+```
+
+For a specific entity, no unique methods are given.
 
 ### Values
 
@@ -143,6 +181,10 @@ To delete, require the passing of the entity id and value name.
 
     $ session.delete_value("entity id", "value name")
 
+##### Values Result Unique Methods
+
+For a specific value, no unique methods are given.
+
 ### Expressions
 
 Add an expression by passing in the entity's id, value name, and the new expression.
@@ -152,6 +194,11 @@ Add an expression by passing in the entity's id, value name, and the new express
 Same goes for the deletion of an expression.
 
     $ session.delete_expression("some entity id", "some value name", "to be deleted expression")
+
+
+##### Expressions Result Unique Methods
+
+For a specific expression, no unique methods are given
 
 ## Contributing
 
