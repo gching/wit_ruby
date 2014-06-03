@@ -1,6 +1,5 @@
 ## entity.rb
 ## Wrapper for entity results.
-## todo
 
 module Wit
   module REST
