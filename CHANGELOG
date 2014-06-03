@@ -3,7 +3,6 @@
 * Added error checking to make sure input parameters to the session are correct.
 * Changed adding expression to not use the given BodyJson and instead, requires the use of just the name of the entity, value, and new expression.
 
-
 == 0.0.3
 * Implemented getting array of entities from instance (GET).
 * Implemented getting a specific entity from its name/id (GET).

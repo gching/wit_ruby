@@ -1,16 +1,14 @@
-
-
 # WitRuby
+
+[![Build Status](https://travis-ci.org/gching/wit_ruby.svg?branch=master)](https://travis-ci.org/gching/wit_ruby)
+[![Gem Version](https://badge.fury.io/rb/wit_ruby.png)](http://badge.fury.io/rb/wit_ruby)
+[![Coverage Status](https://coveralls.io/repos/gching/wit_ruby/badge.png?branch=master)](https://coveralls.io/r/gching/wit_ruby?branch=master)
 
 Provides a unofficial and (seemingly) pleasant Ruby API Wrapper for the Wit.ai API. As of 0.0.3, most functionalities have been implemented. Go over to https://rubygems.org/gems/wit_ruby for more information.
 
 Documentation that you will definitely need : http://rubydoc.info/gems/wit_ruby/
 
 Do also reference the Wit.ai API documentation : https://wit.ai/docs/api
-
-[![Build Status](https://travis-ci.org/gching/wit_ruby.svg?branch=master)](https://travis-ci.org/gching/wit_ruby)
-[![Gem Version](https://badge.fury.io/rb/wit_ruby.png)](http://badge.fury.io/rb/wit_ruby)
-[![Coverage Status](https://coveralls.io/repos/gching/wit_ruby/badge.png?branch=master)](https://coveralls.io/r/gching/wit_ruby?branch=master)
 
 There are other gems that are also Ruby wrappers for Wit.ai, but this was more of learning experience for me! If you don't find this pleasing, do check the others out!
 
@@ -54,7 +52,9 @@ Please again, do look over documentation to see the full scope of usage and conf
 
 ### Result
 
-Every method returns a class wrapper corresponding specifically to the results pertaining to it. The superclass that is inherited (Wit::REST::Result) allows for you to easily access the results of the API call. The results is converted to a hash and is saved in this result class.
+Every method returns a class wrapper corresponding specifically to the results pertaining to it. Each object returned has its own unique defined methods to make your lives easier in getting the specific information from the results. Do look over the documentation to see what you can specifically call.
+
+The superclass that is inherited (Wit::REST::Result) allows for you to easily access the results of the API call. The results is converted to a hash and is saved in this result class.
 You can call methods on it and if it matches the result's hash, it will return it's value. For example,
 
     results.hash = {"a" => "b"}
@@ -89,6 +89,7 @@ To send a specific message, use the saved session to send a given string as a pa
 To get a specific messages information from the wit.ai, pass in the message's ID and use the method below.
 
     $ session.get_message("Message ID")
+
 
 ### Intent
 
