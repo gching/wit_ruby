@@ -11,11 +11,11 @@ module Wit
     end
 
     ## Internal wrapper for multiple entities for a given result.
-    class MultiEntity
+    class EntityArray
       ## Creates an instance that holds array of intents.
       ##
-      ## @param resultData [Array] array of hashes of intents.
-      ## @return [Wit::REST::MultiEntity] with instance variable of Array of intents.
+      ## @param resultData [Array] array of hashes of entity values.
+      ## @return [Wit::REST::MultiEntity] with instance variable of Array of each entity value.
       def initialize(resultData)
 
         entity_arr = Array.new
@@ -37,7 +37,7 @@ module Wit
     ## Wrapper for array of entities as strings. Inherits from Results so it can
     ## be refreshed.
     ## @todo Propagate these methods into Result
-    class EntityArray < Result
+    class MultiEntity < Result
 
       ## Generates instance variable that holds list of entities as strings in array.
       ##

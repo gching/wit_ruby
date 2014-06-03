@@ -46,7 +46,7 @@ describe Wit::REST::Message do
     expect(message_results.confidence).to eql(0.979)
     expect(message_results.intent).to eql("query_metrics")
     expect(message_results.metric.class).to eql(Wit::REST::Entity)
-    expect(message_results.datetime.class).to eql(Wit::REST::MultiEntity)
+    expect(message_results.datetime.class).to eql(Wit::REST::EntityArray)
   end
 
   it "should have the right values in the entities" do

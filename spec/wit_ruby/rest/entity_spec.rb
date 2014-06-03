@@ -21,7 +21,7 @@ describe Wit::REST::Entity do
 
 end
 
-describe Wit::REST::MultiEntity do
+describe Wit::REST::EntityArray do
   let(:json_two) {%([
     {
       "value": {
@@ -38,7 +38,7 @@ describe Wit::REST::MultiEntity do
       "body": "Friday"
     }
   ])}
-  let(:entity_coll) {Wit::REST::MultiEntity.new(MultiJson.load(json_two))}
+  let(:entity_coll) {Wit::REST::EntityArray.new(MultiJson.load(json_two))}
 
 
   it "should be an array with entities" do
@@ -48,7 +48,7 @@ describe Wit::REST::MultiEntity do
 
 end
 
-describe Wit::REST::EntityArray do
+describe Wit::REST::MultiEntity do
   let(:json_three) {%([
   "wit$amount_of_money",
   "wit$contact",
@@ -57,7 +57,7 @@ describe Wit::REST::EntityArray do
   "wit$phrase_to_translate",
   "wit$temperature"
   ])}
-  let(:entity_array) {Wit::REST::EntityArray.new(MultiJson.load(json_three))}
+  let(:entity_array) {Wit::REST::MultiEntity.new(MultiJson.load(json_three))}
 
 
   it "should be each transversable and be strings" do

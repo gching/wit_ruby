@@ -42,7 +42,7 @@ module Wit
       def method_missing(possible_key, *args, &block)
         if @rawdata["outcome"]["entities"].has_key?(possible_key.to_s)
           entity_value = @rawdata["outcome"]["entities"][possible_key.to_s]
-          entity_value.class == Hash ? Entity.new(entity_value) : MultiEntity.new(entity_value)
+          entity_value.class == Hash ? Entity.new(entity_value) : EntityArray.new(entity_value)
         else
           super
         end

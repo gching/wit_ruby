@@ -199,7 +199,7 @@ describe Wit::REST::Session do
     describe "get list of entities" do
 
         it "should return an array of used entities as strings" do
-          expect(get_entities.class).to eql(Wit::REST::EntityArray)
+          expect(get_entities.class).to eql(Wit::REST::MultiEntity)
           expect(get_entities[0].class).to eql(String)
         end
 

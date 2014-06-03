@@ -131,6 +131,7 @@ If it is only one specific intent:
 ```ruby
 intent = session.get_intents("Intent ID or Name")
 intent.entities_used # Return entities used with there id as an array of strings.
+intent.entities # Returns array of entities.
 intent.expression_bodies # Return the expression bodies as an array of strings.
 intent.expressions # Return the list of expressions as array of expression objects.
 ```
@@ -181,10 +182,6 @@ To delete, require the passing of the entity id and value name.
 
     $ session.delete_value("entity id", "value name")
 
-##### Values Result Unique Methods
-
-For a specific value, no unique methods are given.
-
 ### Expressions
 
 Add an expression by passing in the entity's id, value name, and the new expression.
@@ -196,9 +193,6 @@ Same goes for the deletion of an expression.
     $ session.delete_expression("some entity id", "some value name", "to be deleted expression")
 
 
-##### Expressions Result Unique Methods
-
-For a specific expression, no unique methods are given
 
 ## Contributing
 

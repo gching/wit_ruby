@@ -18,6 +18,7 @@ module Wit
       ##
       ## @param message [String] sentence being examined from API.
       ## @return [Wit::REST::Message] message results from API.
+      ## @todo allow for JSON pass in.
       def send_message(message)
         ## Recieve unwrapped results
         results = @client.get("/message?q=#{message}")
@@ -65,13 +66,13 @@ module Wit
       ##       given token if no id is given.
       ##     - returns the specific entity and its parameters with a given id.
       ## @param entity_id [String] entity id for specific retrieval
-      ## @return [Wit::REST::EntityArray] [Wit::REST::Entity] results and returned in either wrapper
+      ## @return [Wit::REST::MultiEntity] [Wit::REST::Entity] results and returned in either wrapper
       ## @todo notify Wit.ai to fix their documentations as there is a wrong description.
       def get_entities(entity_id = nil)
         ## No specific id, so get list of entities
         results = entity_id.nil? ? @client.get("/entities") : @client.get("/entities/#{entity_id}")
         ## Same concept but wrap it properly if neccessary.
-        returnObject = entity_id.nil? ? EntityArray : Entity
+        returnObject = entity_id.nil? ? MultiEntity : Entity
 
         return return_with_class(returnObject, results)
 
