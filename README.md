@@ -44,7 +44,7 @@ To start using the wrapper, create a client with an authorization token given fr
     Override token when created
     $ client = Wit::REST::Client.new(token: "Insert Token Here")
 
-The client provides also a session for you to mainly do API calls. I suggest you save the session somewhere for easy access.
+The client provides a session for you to mainly do API calls. I suggest you save the session somewhere for easy access.
 
     $ session = client.session
 
@@ -89,6 +89,13 @@ To send a specific message, use the saved session to send a given string as a pa
 To get a specific messages information from the wit.ai, pass in the message's ID and use the method below.
 
     $ session.get_message("Message ID")
+
+#### Message Result Unique Methods
+
+    message_results.send_message("Your Message")
+    message_results.confidence # Returns the confidence of the message results.
+    message_results.entity_names # Generates array of names of each entity in this message.
+    message_results.intent # Returns the intent that this message corresponded to.
 
 
 ### Intent
