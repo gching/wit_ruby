@@ -10,8 +10,6 @@ Provides a unofficial and (seemingly) pleasant Ruby API Wrapper for the Wit.AI A
 
 I want to first off mention big props to the Wit.AI team. They are the true wizards here in making this beauty and by no means did I contribute anything magical. Do go check them out at http://wit.ai/! THANK YOU Wit.AI!
 
-Provides an unofficial and (seemingly) pleasant Ruby API Wrapper for the Wit.ai API. As of 1.0.0, most functionalities have been implemented. Go over to https://rubygems.org/gems/wit_ruby for more information.
-
 Documentation that you will definitely need : http://rubydoc.info/gems/wit_ruby/
 
 Do also reference the Wit.AI API documentation : https://wit.ai/docs/api
