@@ -2,11 +2,16 @@
 
 [![Build Status](https://travis-ci.org/gching/wit_ruby.svg?branch=master)](https://travis-ci.org/gching/wit_ruby)
 [![Gem Version](https://badge.fury.io/rb/wit_ruby.png)](http://badge.fury.io/rb/wit_ruby)
+[![Dependency Status](https://gemnasium.com/gching/wit_ruby.svg)](https://gemnasium.com/gching/wit_ruby)
 [![Coverage Status](https://coveralls.io/repos/gching/wit_ruby/badge.png?branch=master)](https://coveralls.io/r/gching/wit_ruby?branch=master)
 
+<<<<<<< HEAD
 Provides a unofficial and (seemingly) pleasant Ruby API Wrapper for the Wit.AI API (Natural Language Interface) As of 1.0.0, most functionalities have been implemented. Go over to https://rubygems.org/gems/wit_ruby for more information.
 
 I want to first off mention big props to the Wit.AI team. They are the true wizards here in making this beauty and by no means did I contribute anything magical. Do go check them out at http://wit.ai/! THANK YOU Wit.AI!
+=======
+Provides an unofficial and (seemingly) pleasant Ruby API Wrapper for the Wit.ai API. As of 1.0.0, most functionalities have been implemented. Go over to https://rubygems.org/gems/wit_ruby for more information.
+>>>>>>> ee00b9e76f8e4c31b668f5cfcfb2f793414b80c8
 
 Documentation that you will definitely need : http://rubydoc.info/gems/wit_ruby/
 
