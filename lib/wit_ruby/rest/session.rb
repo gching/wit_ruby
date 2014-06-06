@@ -20,6 +20,11 @@ module Wit
       ## @return [Wit::REST::Message] message results from API.
       ## @todo allow for JSON pass in.
       def send_message(message)
+        ## Check to see if message length is between 0 and 256
+        length  = message.length
+        if length <= 0 || length > 256
+          raise NotCorrectSchema.new("The given message, \"#{message}\" is either too short or too long. Message length needs to be between 0 and 256.")
+        end
         ## Recieve unwrapped results
         results = @client.get("/message?q=#{message}")
         return return_with_class(Wit::REST::Message, results)
@@ -194,7 +199,7 @@ module Wit
     ##
     class NotRefreshable < Exception; end
 
-    ## Raised when the given result object does not have required parameters.
+    ## Raised when the given paremeters do not fit the required schema.
     ##
     class NotCorrectSchema < Exception; end
 

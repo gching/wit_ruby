@@ -121,6 +121,20 @@ describe Wit::REST::Session do
 
     end
 
+    describe "error" do
+      before do
+        @over_length = "".ljust(257,"derp")
+        @zero_length = ""
+      end
+      it "should raise an error for being over 256 length" do
+        expect{session.send_message(@over_length)}.to raise_error(Wit::REST::NotCorrectSchema)
+      end
+
+      it "should raise an error for having zero length" do
+        expect{session.send_message(@zero_length)}.to raise_error(Wit::REST::NotCorrectSchema)
+      end
+    end
+
   end
 
 

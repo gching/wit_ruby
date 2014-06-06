@@ -1,3 +1,6 @@
+== 1.0.1
+* Added fix to raise an error if a sent message has a length that is not between 0 to 256.
+
 == 1.0.0
 * Yay! 1.0.0 for no reason! (Kinda.)
 * Added error checking to make sure input parameters to the session are correct.
