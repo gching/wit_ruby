@@ -7,4 +7,4 @@ rvm:
 script: bundle exec rake
 env:
   global:
-    secure: TspoESXh5kwkswN8DjNHkcT50zTa6wzCoF3Q/wQ8rmH9aSpke55nh81+T29OXMNsTxdSvoj93KRC3U2MHhRYM+aIKdtjwXFClTERbWKJmcFlkEWf/1LVxYRLqR/jMfb9gIkDQJ10vB1kFqZ+niShcQGgdfJGZn0y4cucA/ZPG9I=
+    secure: AALEF5biTduH6D0+o6SLFzIZuoypg92KV/08XdAnm0nvUFjdu/XU6qhY6b10x/coLQa6CJYTwZ6L5YVZHc90YJTf/N4mpYGUuEMXKg6Nr53I+072BaYshDjDh8IA/t2DtT53ZGr7t9VBf6FWqoDbGJXjdmvbOZZ/AcyQUnu6ksg=
