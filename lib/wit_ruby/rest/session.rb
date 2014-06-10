@@ -34,8 +34,9 @@ module Wit
       ## Do check the certain documentation of what the specific audio file
       ## should be.
       ##
-      ## @param sound [String] path to sound file.
-      def send_sound_message(sound)
+      ## @param sound_file [String] path to sound file.
+      def send_sound_message(sound_file)
+        ## Given the path, we send the file and add proper headers
       end
 
       ## GET - returns stored message for specific id.

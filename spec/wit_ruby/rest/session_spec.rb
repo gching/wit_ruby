@@ -9,7 +9,14 @@ describe Wit::REST::Session do
   let(:message) {"Hi"}
   let(:rand_hash) {{"a" => "a", "b" => "b"}}
   let(:randSession) {Wit::REST::Session.new(randClient)}
-  let(:session) {Wit::REST::Client.new.session}
+  ## Uses a testing specific developer instances so a generic testing platform is created.
+  ## Don't do dirty stuff.
+  ## If in Travis, use ENV["TRAVIS_WIT_TOKEN"]
+  if ENV["TRAVIS_WIT_TOKEN"]
+    let(:session) {Wit::REST::Client.new(token: ENV["TRAVIS_WIT_TOKEN"]).session}
+  else
+    let(:session) {Wit::REST::Client.new(token: "BRB7NEG4D2TCL6C5VUMD4UA5H376DPKU").session}
+  end
   random_name = (0...10).map { ('a'..'z').to_a[rand(26)] }.join
 
 
@@ -23,7 +30,7 @@ describe Wit::REST::Session do
       randSession.should respond_to(:send_message)
     end
 
-    it ".send_sound_message(soundwave)" do
+    it ".send_sound_message(sound_file)" do
       randSession.should respond_to(:send_sound_message)
     end
 
