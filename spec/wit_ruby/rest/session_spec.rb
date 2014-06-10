@@ -145,6 +145,25 @@ describe Wit::REST::Session do
   end
 
 
+  describe "Sending sound file" do
+    let(:test_sound_file_hello_path) {File.dirname(__FILE__) + '/../../test_hello.wav'}
+
+    let(:sent_message_sound_result) {session.send_sound_message(test_sound_file_hello_path)}
+    before do
+      VCR.insert_cassette 'send_sound_message', record: :once
+    end
+    after do
+      VCR.eject_cassette
+    end
+
+    it "should return an object of class Message" do
+      expect(sent_message_sound_result.class).to eql(Wit::REST::Message)
+    end
+
+
+  end
+
+
   describe "Geting message info" do
     let(:sent_message_result) {session.send_message(message)}
     let(:sent_message_id) {sent_message_result.msg_id}

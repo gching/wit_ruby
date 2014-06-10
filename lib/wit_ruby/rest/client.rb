@@ -64,12 +64,14 @@ module Wit
         method_rest_class = Net::HTTP.const_get rest_method.to_s.capitalize
 
         ## Define the actual method for Wit::Session:Client
-        define_method rest_method do |path, params=nil|
+        define_method rest_method do |path, params=nil, content_overide=nil|
           request = method_rest_class.new path, {"Authorization" => "Bearer #{@auth_token}"}
           ## If post or put, set content-type to be JSON
           if [:post, :put].include?(rest_method)
             request.body = params
-            request["Content-Type"] = "application/json"
+            ## Will check if there is a Content-Type Header overide, and if not, default to
+            ## JSON specific header.
+            request["Content-Type"] = content_overide || "application/json"
             request["Accept"] = "application/vnd.wit.20160202+json"
           end
           return connect_send(request)

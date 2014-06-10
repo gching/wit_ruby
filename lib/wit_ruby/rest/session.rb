@@ -34,9 +34,23 @@ module Wit
       ## Do check the certain documentation of what the specific audio file
       ## should be.
       ##
-      ## @param sound_file [String] path to sound file.
-      def send_sound_message(sound_file)
+      ## @param sound_file_path [String] path to sound file.
+      def send_sound_message(sound_file_path)
         ## Given the path, we send the file and add proper headers
+        ## Check if it is a specifc file type
+        ## This seems dirty, look more into it.
+        sound_file_type = sound_file_path.split(".")[-1]
+        ## Raise error if not accepted
+        unless ["wav", "mp3", "ulaw", "raw"].include?(sound_file_type)
+          raise NotCorrectSchema.new("The current sound file is not one of thes supported types. The file types accepted are .wav, .mp3, .ulaw and .raw")
+        end
+
+        ## Set Content-Type header by overiding it with the correct filetype.
+        ## If it is raw, add the extra params to the end of it.
+        content_overide = "audio/#{sound_file_type}"
+        content_overide += ";encoding=unsigned-integer;bits=16;rate=8000;endian=big" if sound_file_type == "raw"
+        results = @client.post("/speech", File.read(sound_file_path), "audio/#{sound_file_type}")
+        return return_with_class(Wit::REST::Message, results)
       end
 
       ## GET - returns stored message for specific id.
