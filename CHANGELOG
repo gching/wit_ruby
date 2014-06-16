@@ -1,5 +1,6 @@
 == 1.1.0
 * Implemented API call to send a specific sound file containing a message over to wit.ai (GET)
+* Changed testing suites to use a general instance for testing over at wit.ai so all developers can get passing tests.
 
 == 1.0.1
 * Added fix to raise an error if a sent message has a length that is not between 0 to 256.
