@@ -150,7 +150,7 @@ describe Wit::REST::Session do
 
     let(:sent_message_sound_result) {session.send_sound_message(test_sound_file_hello_path)}
     before do
-      VCR.insert_cassette 'send_sound_message', record: :once
+      VCR.insert_cassette 'send_sound_message', record: :once, preserve_exact_body_bytes: true
     end
     after do
       VCR.eject_cassette

@@ -42,7 +42,7 @@ module Wit
         sound_file_type = sound_file_path.split(".")[-1]
         ## Raise error if not accepted
         unless ["wav", "mp3", "ulaw", "raw"].include?(sound_file_type)
-          raise NotCorrectSchema.new("The current sound file is not one of thes supported types. The file types accepted are .wav, .mp3, .ulaw and .raw")
+          raise NotCorrectSchema.new("The current sound file is not one of the supported types. The file types accepted are .wav, .mp3, .ulaw and .raw")
         end
 
         ## Set Content-Type header by overiding it with the correct filetype.
