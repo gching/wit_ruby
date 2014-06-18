@@ -6,7 +6,7 @@
 [![Coverage Status](https://coveralls.io/repos/gching/wit_ruby/badge.png?branch=master)](https://coveralls.io/r/gching/wit_ruby?branch=master)
 
 
-Provides a unofficial and (seemingly) pleasant Ruby API Wrapper for the Wit.AI API (Natural Language Interface) As of 1.0.0, most functionalities have been implemented. Go over to https://rubygems.org/gems/wit_ruby for more information.
+Provides an unofficial and (seemingly) pleasant Ruby API Wrapper for the Wit.AI API (Natural Language Interface) As of 1.0.0, most functionalities have been implemented. Go over to https://rubygems.org/gems/wit_ruby for more information.
 
 I want to first off mention big props to the Wit.AI team. They are the true wizards here in making this beauty and by no means did I contribute anything magical. Do go check them out at http://wit.ai/! THANK YOU Wit.AI!
 
