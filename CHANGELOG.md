@@ -1,6 +1,12 @@
 # WitRuby Changelog
 All changes to this API wrapper will be documented in this file. This file follows the guidelines explained over at http://keepachangelog.com/.
 
+## 1.1.1 - 2014-06-30
+### Added
+- Added instance method, `entities`, for class Message that returns entities in result of a query
+- Added optional argument, index, for methods `confidence`, `entities`, `entity_names`, and `intent` that returns each value at the desired index. Defaults at 0 if no index is passed (this is in response to Wit returning more than one outcome).
+- Added ability to pass queries with spaces.
+
 ## 1.1.0 - 2014-06-15
 
 ### Added

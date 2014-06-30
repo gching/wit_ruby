@@ -181,7 +181,7 @@ describe Wit::REST::Session do
 
       it "should get back the same message and have the same has as the sent message results" do
         expect(@resulting_message.msg_id).to eql(sent_message_id)
-        expect(@resulting_message.msg_body).to eql(sent_message_result.msg_body)
+        expect(@resulting_message.outcomes[0]["_text"]).to eql(sent_message_result.outcomes[0]["_text"])
       end
     end
   end
