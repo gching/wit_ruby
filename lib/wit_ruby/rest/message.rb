@@ -11,14 +11,21 @@ module Wit
       ##
       ## @return [Float] confidence in the message for the intent.
       def confidence(index=0)
-        outcomes[index]["confidence"]
+        self.raw_data["outcomes"][index]["confidence"]
       end
 
       ## Returns the intent that this message corresponded to.
       ##
       ## @return [String] intent name that this message corrsponded to.
       def intent(index=0)
-        outcomes[index]["intent"]
+        self.raw_data["outcomes"][index]["intent"]
+      end
+
+      ## Returns the entities that this message corresponded to.
+      ##
+      ## @return Hash of entities that this message corrsponded to.
+      def entities(index=0)
+        self.raw_data["outcomes"][index]["entities"]
       end
 
       ## Generates Array of the names of each entity in this message.
@@ -26,7 +33,7 @@ module Wit
       ## @return [Array] names of each entity
       def entity_names(index=0)
         entity_arr = Array.new
-        outcomes[index]["entities"].each_key do |key|
+        self.raw_data["outcomes"][index]["entities"].each_key do |key|
           entity_arr << key
         end
         return entity_arr
