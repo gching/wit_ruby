@@ -10,23 +10,23 @@ module Wit
       ## Returns the confidence of the message results.
       ##
       ## @return [Float] confidence in the message for the intent.
-      def confidence
-        outcomes[0]["confidence"]
+      def confidence(index=0)
+        outcomes[index]["confidence"]
       end
 
       ## Returns the intent that this message corresponded to.
       ##
       ## @return [String] intent name that this message corrsponded to.
-      def intent
-        outcomes[0]["intent"]
+      def intent(index=0)
+        outcomes[index]["intent"]
       end
 
       ## Generates Array of the names of each entity in this message.
       ##
       ## @return [Array] names of each entity
-      def entity_names
+      def entity_names(index=0)
         entity_arr = Array.new
-        outcomes[0]["entities"].each_key do |key|
+        outcomes[index]["entities"].each_key do |key|
           entity_arr << key
         end
         return entity_arr
