@@ -23,7 +23,7 @@ describe Wit::REST::Client do
     @client = Wit::REST::Client.new(token: rand_auth)
     @conn = @client.instance_variable_get("@conn")
     expect(@conn.address).to  eql("api.wit.ai")
-    expect(@conn.use_ssl?).to be_true
+    expect(@conn.use_ssl?).to be_truthy
 
   end
 
@@ -41,7 +41,7 @@ describe Wit::REST::Client do
     @conn = @client.instance_variable_get("@conn")
     expect(@conn.address).to eql(new_host)
     expect(@conn.port).to eql(new_port)
-    expect(@conn.proxy?).to be_true
+    expect(@conn.proxy?).to be_truthy
     expect(@conn.proxy_address).to eql(new_proxy)
     expect(@conn.proxy_port).to eql(new_proxy_port)
     expect(@conn.open_timeout).to eql(new_timeout)
@@ -52,7 +52,7 @@ describe Wit::REST::Client do
 
   it "should setup a session parameter to properly wrap API with commands" do
     @client = Wit::REST::Client.new(token: rand_auth)
-    expect(@client.instance_variable_get("@session")).to be_true
+    expect(@client.instance_variable_get("@session")).to be_truthy
   end
 
 

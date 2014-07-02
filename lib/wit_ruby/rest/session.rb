@@ -63,7 +63,6 @@ module Wit
       ## @todo Notify Wit.ai as there documentation does not include the stats parameter
       def get_message(message_id)
         results = @client.get("/messages/#{message_id}")
-
         return return_with_class(Wit::REST::Message, results)
       end
 

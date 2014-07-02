@@ -38,14 +38,14 @@ describe Wit::REST::Result do
   end
 
   it "should be refereshable if rest parameters and path/body are given and not if it isn't given" do
-    expect(result.refreshable?).to be_true
-    expect(not_refresh_result.refreshable?).to be_false
+    expect(result.refreshable?).to be_truthy
+    expect(not_refresh_result.refreshable?).to be_falsey
   end
 
   it "should have an empty method to check if the data is empty and return true if it is" do
-    expect(result.empty?).to be_false
-    expect(empty_hash.empty?).to be_true
-    expect(empty_array.empty?).to be_true
+    expect(result.empty?).to be_falsey
+    expect(empty_hash.empty?).to be_truthy
+    expect(empty_array.empty?).to be_truthy
   end
 
 end
