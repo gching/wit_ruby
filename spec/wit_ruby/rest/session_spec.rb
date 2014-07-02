@@ -95,7 +95,6 @@ describe Wit::REST::Session do
     end
 
     it "should have a message id method" do
-      puts result.raw_data
       expect(result.msg_id).to eql(result_data["msg_id"])
     end
 
