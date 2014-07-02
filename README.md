@@ -100,7 +100,7 @@ To send a specific message, use the saved session to send a given string as a pa
 To send a specific message sound file, pass over the path of the file as a parameter.
 
     $ session.send_sound_message("Path to sound file")
-    
+
 To get a specific messages information from the wit.ai, pass in the message's ID and use the method below.
 
     $ session.get_message("Message ID")
@@ -206,7 +206,7 @@ Same goes for the deletion of an expression.
 
 ## Contributing
 
-I am a beginner developer so do contribute or help as much as possible! I definitely need to learn a lot :). Whoever helps will also have there name put here below this line. Amazing!
+I am a beginner developer so do contribute or help as much as possible! I definitely need to learn a lot :). Whoever helps will also have there name put in [CONTRIBUTORS.md](CONTRIBUTORS.md)
 _________________________________
 
 
