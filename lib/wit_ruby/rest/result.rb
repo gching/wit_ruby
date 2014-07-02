@@ -104,7 +104,7 @@ module Wit
       ## @return [Array] entities in this current result object.
       def setup_entities
         ## Get the current entities hash
-        entities_raw = @rawdata["entities"] || @rawdata["outcome"]["entities"]
+        entities_raw = @rawdata["entities"] || @rawdata["outcomes"]["entities"]
         ## Set the intance variable to be an array containing these entities.
         ## If its empty, then set the instance variable to nil
         unless entities_raw.empty?

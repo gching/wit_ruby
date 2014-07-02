@@ -109,10 +109,12 @@ To get a specific messages information from the wit.ai, pass in the message's ID
 
 ```ruby
 message_results = session.send_message("Your Message")
-message_results.confidence # Returns the confidence of the message results.
-message_results.entity_names # Generates array of names of each entity in this message.
-message_results.intent # Returns the intent that this message corresponded to.
+message_results.confidence(index=0) # Returns the confidence of the message results at the specified index.
+message_results.entities(index=0) # Returns the entities of the message results at the specified index.
+message_results.entity_names(index=0) # Generates array of names of each entity in this message at the specified index.
+message_results.intent(index=0) # Returns the intent that this message corresponded to at the specified index.
 ```
+*Index is an optional argument of type integer that lets you select the outcome at the specified index. The default index is 0.*
 
 ### Intent
 

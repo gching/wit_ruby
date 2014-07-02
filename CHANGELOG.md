@@ -1,6 +1,23 @@
 # WitRuby Changelog
 All changes to this API wrapper will be documented in this file. This file follows the guidelines explained over at http://keepachangelog.com/.
 
+## 1.1.1 - 2014-06-30
+### Added
+- As the wrapper defaults to the newest Wit.AI API version, new additions make WitRuby compatible.
+- Added instance method, `entities`, for class Message that returns entities in result of a query
+- Added optional argument, index, for methods `confidence`, `entities`, `entity_names`, and `intent` that returns each value at the desired index. Defaults at 0 if no index is passed (this is in response to Wit returning more than one outcome).
+- Added ability to pass queries with spaces.
+- Default to RSpec 3.
+
+### Deprecated
+- New Wit.AI version deprecates some specific methods as results has been changed.
+
+### Removed
+- Nothing
+
+### Fixed
+- Tests that fail due to defaulting to the newest RSpec (being RSpec 3). Now defaults to RSpec 3 and fixed accordingly.
+
 ## 1.1.0 - 2014-06-15
 
 ### Added

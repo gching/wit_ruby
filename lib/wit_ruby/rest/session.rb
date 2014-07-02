@@ -25,6 +25,8 @@ module Wit
         if length <= 0 || length > 256
           raise NotCorrectSchema.new("The given message, \"#{message}\" is either too short or too long. Message length needs to be between 0 and 256.")
         end
+        # Replace spaces with "%20" for usage in URL
+        message.gsub!(" ", "%20")
         ## Recieve unwrapped results
         results = @client.get("/message?q=#{message}")
         return return_with_class(Wit::REST::Message, results)
@@ -61,7 +63,6 @@ module Wit
       ## @todo Notify Wit.ai as there documentation does not include the stats parameter
       def get_message(message_id)
         results = @client.get("/messages/#{message_id}")
-
         return return_with_class(Wit::REST::Message, results)
       end
 
