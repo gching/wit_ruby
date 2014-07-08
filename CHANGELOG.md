@@ -16,6 +16,7 @@ All changes to this API wrapper will be documented in this file. This file follo
 - Nothing
 
 ### Fixed
+- Due to the new version of the API, functionalities break in 1.1.0. This is fixed from the new additions.
 - Tests that fail due to defaulting to the newest RSpec (being RSpec 3). Now defaults to RSpec 3 and fixed accordingly.
 
 ## 1.1.0 - 2014-06-15
