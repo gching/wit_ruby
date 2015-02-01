@@ -1,5 +1,8 @@
 # WitRuby
 
+## This might not be what you are looking for. Currently, this repo is not a work in progress and no one is keeping it up to date. Do check out the official SDK provided by Wit itself over at https://github.com/wit-ai/libwit-ruby.
+### If you want to contriubute to this and keep it up to date, feel free!
+
 [![Build Status](https://travis-ci.org/gching/wit_ruby.svg?branch=master)](https://travis-ci.org/gching/wit_ruby)
 [![Gem Version](https://badge.fury.io/rb/wit_ruby.png)](http://badge.fury.io/rb/wit_ruby)
 [![Dependency Status](https://gemnasium.com/gching/wit_ruby.svg)](https://gemnasium.com/gching/wit_ruby)
